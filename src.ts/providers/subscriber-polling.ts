@@ -113,7 +113,6 @@ export class PollingBlockSubscriber implements Subscriber {
     }
 }
 
-
 /**
  *  An **OnBlockSubscriber** can be sub-classed, with a [[_poll]]
  *  implmentation which will be called on every new block.
