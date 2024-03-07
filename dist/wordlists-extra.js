@@ -100,7 +100,7 @@ const rotlBL = (h, l, s) => (h << (s - 32)) | (l >>> (64 - s));
 /**
  *  The current version of quais.
  */
-const version = "6.8.1";
+const version = "0.0.1";
 
 /**
  *  Property helper functions.

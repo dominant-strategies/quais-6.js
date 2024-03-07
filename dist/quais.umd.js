@@ -9,7 +9,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
     /**
      *  The current version of quais.
      */
-    const version = "6.8.1";
+    const version = "0.0.1";
 
     /**
      *  Property helper functions.
@@ -48,6 +48,19 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             accum[keys[index]] = v;
             return accum;
         }, {});
+    }
+    // Crawl up the constructor chain to find a static method
+    function getStatic(ctor, key) {
+        for (let i = 0; i < 32; i++) {
+            if (ctor[key]) {
+                return ctor[key];
+            }
+            if (!ctor.prototype || typeof (ctor.prototype) !== "object") {
+                break;
+            }
+            ctor = Object.getPrototypeOf(ctor.prototype).constructor;
+        }
+        return null;
     }
     /**
      *  Assigns the %%values%% to %%target%% as read-only values.
@@ -701,11 +714,19 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
      *  Encode %%value%% as a Base58-encoded string.
      */
     function encodeBase58(_value) {
-        let value = toBigInt(getBytes(_value));
+        const bytes = getBytes(_value);
+        let value = toBigInt(bytes);
         let result = "";
         while (value) {
             result = Alphabet[Number(value % BN_58)] + result;
             value /= BN_58;
+        }
+        // Account for leading padding zeros
+        for (let i = 0; i < bytes.length; i++) {
+            if (bytes[i]) {
+                break;
+            }
+            result = Alphabet[0] + result;
         }
         return result;
     }
@@ -2615,65 +2636,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         ].join("-");
     }
 
-    /**
-     *  A constant for the zero address.
-     *
-     *  (**i.e.** ``"0x0000000000000000000000000000000000000000"``)
-     */
-    const ZeroAddress = "0x0000000000000000000000000000000000000000";
-
-    /**
-     *  A constant for the zero hash.
-     *
-     *  (**i.e.** ``"0x0000000000000000000000000000000000000000000000000000000000000000"``)
-     */
-    const ZeroHash = "0x0000000000000000000000000000000000000000000000000000000000000000";
-
-    /**
-     *  A constant for the order N for the secp256k1 curve.
-     *
-     *  (**i.e.** ``0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n``)
-     */
-    const N$1 = BigInt("0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
-    /**
-     *  A constant for the number of wei in a single ether.
-     *
-     *  (**i.e.** ``1000000000000000000n``)
-     */
-    const WeiPerEther = BigInt("1000000000000000000");
-    /**
-     *  A constant for the maximum value for a ``uint256``.
-     *
-     *  (**i.e.** ``0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn``)
-     */
-    const MaxUint256 = BigInt("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-    /**
-     *  A constant for the minimum value for an ``int256``.
-     *
-     *  (**i.e.** ``-8000000000000000000000000000000000000000000000000000000000000000n``)
-     */
-    const MinInt256 = BigInt("0x8000000000000000000000000000000000000000000000000000000000000000") * BigInt(-1);
-    /**
-     *  A constant for the maximum value for an ``int256``.
-     *
-     *  (**i.e.** ``0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn``)
-     */
-    const MaxInt256 = BigInt("0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-
-    // NFKC (composed)             // (decomposed)
-    /**
-     *  A constant for the ether symbol (normalized using NFKC).
-     *
-     *  (**i.e.** ``"\\u039e"``)
-     */
-    const quaisymbol = "\u039e"; // "\uD835\uDF63";
-    /**
-     *  A constant for the [[link-eip-191]] personal message prefix.
-     *
-     *  (**i.e.** ``"\\x19Ethereum Signed Message:\\n"``)
-     */
-    const MessagePrefix = "\x19Quai Signed Message:\n";
-
     const ShardData = [
         {
             name: "Cyprus One",
@@ -2736,13 +2698,15 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             return null;
         const byteCode = address.substring(2, 4).toUpperCase();
         for (const shardInfo of ShardData) {
-            if (byteCode >= shardInfo.byte[0] && byteCode <= shardInfo.byte[1]) {
+            if (byteCode >= shardInfo.byte[0].toUpperCase() && byteCode <= shardInfo.byte[1].toUpperCase()) {
                 return shardInfo.shard;
             }
         }
         return null;
     }
     function getTxType(from, to) {
+        if (from === null || to === null)
+            return 0;
         const fromShard = getShardForAddress(from);
         const toShard = getShardForAddress(to);
         if (fromShard === null || toShard === null) {
@@ -3104,15 +3068,35 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         allowLoose;
         #data;
         #offset;
-        constructor(data, allowLoose) {
+        #bytesRead;
+        #parent;
+        #maxInflation;
+        constructor(data, allowLoose, maxInflation) {
             defineProperties(this, { allowLoose: !!allowLoose });
             this.#data = getBytesCopy(data);
+            this.#bytesRead = 0;
+            this.#parent = null;
+            this.#maxInflation = (maxInflation != null) ? maxInflation : 1024;
             this.#offset = 0;
         }
         get data() { return hexlify(this.#data); }
         get dataLength() { return this.#data.length; }
         get consumed() { return this.#offset; }
         get bytes() { return new Uint8Array(this.#data); }
+        #incrementBytesRead(count) {
+            if (this.#parent) {
+                return this.#parent.#incrementBytesRead(count);
+            }
+            this.#bytesRead += count;
+            // Check for excessive inflation (see: #4537)
+            assert(this.#maxInflation < 1 || this.#bytesRead <= this.#maxInflation * this.dataLength, `compressed ABI data exceeds inflation ratio of ${this.#maxInflation} ( see: https:/\/github.com/ethers-io/ethers.js/issues/4537 )`, "BUFFER_OVERRUN", {
+                buffer: getBytesCopy(this.#data), offset: this.#offset,
+                length: count, info: {
+                    bytesRead: this.#bytesRead,
+                    dataLength: this.dataLength
+                }
+            });
+        }
         #peekBytes(offset, length, loose) {
             let alignedLength = Math.ceil(length / WordSize) * WordSize;
             if (this.#offset + alignedLength > this.#data.length) {
@@ -3131,11 +3115,14 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         }
         // Create a sub-reader with the same underlying data, but offset
         subReader(offset) {
-            return new Reader(this.#data.slice(this.#offset + offset), this.allowLoose);
+            const reader = new Reader(this.#data.slice(this.#offset + offset), this.allowLoose, this.#maxInflation);
+            reader.#parent = this;
+            return reader;
         }
         // Read bytes
         readBytes(length, loose) {
             let bytes = this.#peekBytes(0, length, !!loose);
+            this.#incrementBytesRead(length);
             this.#offset += bytes.length;
             // @TODO: Make sure the length..end bytes are all 0?
             return bytes.slice(0, length);
@@ -6595,6 +6582,65 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
     BigInt(0);
     secp256k1.ProjectivePoint;
 
+    /**
+     *  A constant for the zero address.
+     *
+     *  (**i.e.** ``"0x0000000000000000000000000000000000000000"``)
+     */
+    const ZeroAddress = "0x0000000000000000000000000000000000000000";
+
+    /**
+     *  A constant for the zero hash.
+     *
+     *  (**i.e.** ``"0x0000000000000000000000000000000000000000000000000000000000000000"``)
+     */
+    const ZeroHash = "0x0000000000000000000000000000000000000000000000000000000000000000";
+
+    /**
+     *  A constant for the order N for the secp256k1 curve.
+     *
+     *  (**i.e.** ``0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n``)
+     */
+    const N$1 = BigInt("0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
+    /**
+     *  A constant for the number of wei in a single ether.
+     *
+     *  (**i.e.** ``1000000000000000000n``)
+     */
+    const WeiPerEther = BigInt("1000000000000000000");
+    /**
+     *  A constant for the maximum value for a ``uint256``.
+     *
+     *  (**i.e.** ``0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn``)
+     */
+    const MaxUint256 = BigInt("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+    /**
+     *  A constant for the minimum value for an ``int256``.
+     *
+     *  (**i.e.** ``-8000000000000000000000000000000000000000000000000000000000000000n``)
+     */
+    const MinInt256 = BigInt("0x8000000000000000000000000000000000000000000000000000000000000000") * BigInt(-1);
+    /**
+     *  A constant for the maximum value for an ``int256``.
+     *
+     *  (**i.e.** ``0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn``)
+     */
+    const MaxInt256 = BigInt("0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+
+    // NFKC (composed)             // (decomposed)
+    /**
+     *  A constant for the ether symbol (normalized using NFKC).
+     *
+     *  (**i.e.** ``"\\u039e"``)
+     */
+    const quaisymbol = "\u039e"; // "\uD835\uDF63";
+    /**
+     *  A constant for the [[link-eip-191]] personal message prefix.
+     *
+     *  (**i.e.** ``"\\x19Ethereum Signed Message:\\n"``)
+     */
+    const MessagePrefix = "\x19Quai Signed Message:\n";
+
     // Constants
     const BN_0$7 = BigInt(0);
     const BN_1$3 = BigInt(1);
@@ -6939,8 +6985,8 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                 lowS: true
             });
             return Signature.from({
-                r: toBeHex(sig.r, 32),
-                s: toBeHex(sig.s, 32),
+                r: toBeHex("0x" + sig.r.toString(16), 32),
+                s: toBeHex("0x" + sig.s.toString(16), 32),
                 v: (sig.recovery ? 0x1c : 0x1b)
             });
         }
@@ -7229,6 +7275,10 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             base36 = "0" + base36;
         }
         return "XE" + ibanChecksum("XE00" + base36) + base36;
+    }
+    function getContractAddress(from, nonce, data) {
+        const nonceBytes = zeroPadValue(toBeHex(toBigInt(nonce)), 8);
+        return getAddress(dataSlice(keccak256(concat([getAddress(from), nonceBytes, stripZerosLeft(data)])), 12));
     }
 
     // http://ethereum.stackexchange.com/questions/760/how-is-the-address-of-an-ethereum-contract-computed
@@ -9707,7 +9757,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             nonce: handleNumber(fields[1], "nonce"),
             maxPriorityFeePerGas: maxPriorityFeePerGas,
             maxFeePerGas: maxFeePerGas,
-            gasPrice: null,
             gasLimit: handleUint(fields[4], "gasLimit"),
             to: handleAddress(fields[5]),
             value: handleUint(fields[6], "value"),
@@ -9728,12 +9777,11 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         const maxPriorityFeePerGas = handleUint(fields[2], "maxPriorityFeePerGas");
         const maxFeePerGas = handleUint(fields[3], "maxFeePerGas");
         const tx = {
-            type: 0,
+            type: 2,
             chainId: handleUint(fields[0], "chainId"),
             nonce: handleNumber(fields[1], "nonce"),
             maxPriorityFeePerGas: maxPriorityFeePerGas,
             maxFeePerGas: maxFeePerGas,
-            gasPrice: null,
             gasLimit: handleUint(fields[4], "gasLimit"),
             to: handleAddress(fields[5]),
             value: handleUint(fields[6], "value"),
@@ -10167,36 +10215,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             return types;
         }
         /**
-         *  Returns true if this transaction is a legacy transaction (i.e.
-         *  ``type === 0``).
-         *
-         *  This provides a Type Guard that the related properties are
-         *  non-null.
-         */
-        isLegacy() {
-            return (this.type === 0);
-        }
-        /**
-         *  Returns true if this transaction is berlin hardform transaction (i.e.
-         *  ``type === 1``).
-         *
-         *  This provides a Type Guard that the related properties are
-         *  non-null.
-         */
-        isBerlin() {
-            return (this.type === 1);
-        }
-        /**
-         *  Returns true if this transaction is london hardform transaction (i.e.
-         *  ``type === 2``).
-         *
-         *  This provides a Type Guard that the related properties are
-         *  non-null.
-         */
-        isLondon() {
-            return (this.type === 2);
-        }
-        /**
          *  Create a copy of this transaciton.
          */
         clone() {
@@ -10241,14 +10259,13 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             if (tx == null) {
                 return new Transaction();
             }
-            console.log("txfrom", tx);
             if (typeof (tx) === "string") {
                 const payload = getBytes(tx);
                 if (payload[0] >= 0x7f) { // @TODO: > vs >= ??
                     return Transaction.from(_parse(payload));
                 }
                 switch (payload[0]) {
-                    // case 1: return Transaction.from(_parseEip2930(payload));
+                    case 0: return Transaction.from(_parse(payload));
                     case 2: return Transaction.from(_parseStandardETx(payload));
                 }
                 assert(false, "unsupported transaction type", "UNSUPPORTED_OPERATION", { operation: "from" });
@@ -10265,9 +10282,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             }
             if (tx.gasLimit != null) {
                 result.gasLimit = tx.gasLimit;
-            }
-            if (tx.gasPrice != null) {
-                result.gasPrice = tx.gasPrice;
             }
             if (tx.maxPriorityFeePerGas != null) {
                 result.maxPriorityFeePerGas = tx.maxPriorityFeePerGas;
@@ -11399,9 +11413,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             }
             else {
                 if (this.isTuple()) {
-                    if (format !== "sighash") {
-                        result += this.type;
-                    }
                     result += "(" + this.components.map((comp) => comp.format(format)).join((format === "full") ? ", " : ",") + ")";
                 }
                 else {
@@ -12291,6 +12302,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
     const paramTypeBytes = new RegExp(/^bytes([0-9]*)$/);
     const paramTypeNumber = new RegExp(/^(u?int)([0-9]*)$/);
     let defaultCoder = null;
+    let defaultMaxInflation = 1024;
     function getBuiltinCallException(action, tx, data, abiCoder) {
         let message = "missing revert data";
         let reason = null;
@@ -12427,7 +12439,11 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         decode(types, data, loose) {
             const coders = types.map((type) => this.#getCoder(ParamType.from(type)));
             const coder = new TupleCoder(coders, "_");
-            return coder.decode(new Reader(data, loose));
+            return coder.decode(new Reader(data, loose, defaultMaxInflation));
+        }
+        static _setDefaultMaxInflation(value) {
+            assertArgument(typeof (value) === "number" && Number.isInteger(value), "invalid defaultMaxInflation factor", "value", value);
+            defaultMaxInflation = value;
         }
         /**
          *  Returns the shared singleton instance of a default [[AbiCoder]].
@@ -14190,19 +14206,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
     }
     //////////////////////
     // Transaction Receipt
-    /*
-    export interface LegacyTransactionReceipt {
-        byzantium: false;
-        status: null;
-        root: string;
-    }
-
-    export interface ByzantiumTransactionReceipt {
-        byzantium: true;
-        status: number;
-        root: null;
-    }
-    */
     /**
      *  A **TransactionReceipt** includes additional information about a
      *  transaction that is only available after it has been mined.
@@ -14294,7 +14297,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
          *  This is no present and was only included in pre-byzantium blocks, but
          *  could be used to validate certain parts of the receipt.
          */
-        root;
         #logs;
         etxs;
         /**
@@ -14328,7 +14330,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                 type: tx.type,
                 //byzantium: tx.byzantium,
                 status: tx.status,
-                root: tx.root
             });
         }
         /**
@@ -14340,7 +14341,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
          */
         toJSON() {
             const { to, from, contractAddress, hash, index, blockHash, blockNumber, logsBloom, logs, //byzantium, 
-            status, root } = this;
+            status } = this;
             return {
                 _type: "TransactionReceipt",
                 blockHash, blockNumber,
@@ -14350,7 +14351,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                 from,
                 gasPrice: toJson(this.gasPrice),
                 gasUsed: toJson(this.gasUsed),
-                hash, index, logs, logsBloom, root, status, to
+                hash, index, logs, logsBloom, status, to
             };
         }
         /**
@@ -16086,6 +16087,50 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             const data = concat([this.bytecode, this.interface.encodeDeploy(resolvedArgs)]);
             return Object.assign({}, overrides, { data });
         }
+        // getDeployTransaction3(...args: Array<any>): TransactionRequest {
+        //     let tx: TransactionRequest = {};
+        //     // If we have 1 additional argument, we allow transaction overrides
+        //     if (
+        //       args.length === this.interface.deploy.inputs.length + 1 &&
+        //       typeof args[args.length - 1] === "object"
+        //     ) {
+        //       //tx = shallowCopy(args.pop());
+        //         tx = copyOverrides(args.pop());
+        //       for (const key in tx) {
+        //         if (!allowedTransactionKeys[key]) {
+        //           throw new Error("unknown transaction override " + key);
+        //         }
+        //       }
+        //     }
+        //     // Do not allow these to be overridden in a deployment transaction
+        //     ["data", "from", "to"].forEach((key) => {
+        //       if ((<any>tx)[key] == null) {
+        //         return;
+        //       }
+        //       assertArgument(false, "cannot override " + key, key, (<any>tx)[key]);
+        //     });
+        //     if (tx.value) {
+        //         const value = Number(tx.value)
+        //         if ( value != 0 && !this.interface.deploy.payable) {
+        //             assertArgument(
+        //                 false,
+        //                 "non-zero value provided to non-payable (or constructor) function",
+        //                     "value", value
+        //             );
+        //         }
+        //     }
+        //     // // Make sure the call matches the constructor signature
+        //     // logger.checkArgumentCount(
+        //     //   args.length,
+        //     //   this.interface.deploy.inputs.length,
+        //     //   " in Contract constructor"
+        //     // );
+        //     // Set the data to the bytecode + the encoded constructor arguments
+        //     tx.data = hexlify(
+        //       concat([this.bytecode, this.interface.encodeDeploy(args)])
+        //     );
+        //     return tx;
+        //   }
         /**
          *  Resolves to the Contract deployed by passing %%args%% into the
          *  constructor.
@@ -16099,9 +16144,38 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             assert(this.runner && typeof (this.runner.sendTransaction) === "function", "factory runner does not support sending transactions", "UNSUPPORTED_OPERATION", {
                 operation: "sendTransaction"
             });
-            const sentTx = await this.runner.sendTransaction(tx);
-            const address = getCreateAddress(sentTx);
+            if (this.runner instanceof Wallet) {
+                tx.from = this.runner.address;
+            }
+            const grindedTx = await this.grindContractAddress(tx);
+            const sentTx = await this.runner.sendTransaction(grindedTx);
+            const address = getStatic(this.constructor, "getContractAddress")?.(tx);
+            //const address = getCreateAddress(sentTx);
             return new BaseContract(address, this.interface, this.runner, sentTx);
+        }
+        static getContractAddress(transaction) {
+            return getContractAddress(transaction.from, BigInt(transaction.nonce), // Fix: Convert BigInt to bigint
+            transaction.data);
+        }
+        async grindContractAddress(tx) {
+            if (tx.nonce == null && tx.from) {
+                tx.nonce = await this.runner?.provider?.getTransactionCount(tx.from);
+            }
+            const sender = String(tx.from);
+            const toShard = getShardForAddress(sender);
+            var i = 0;
+            var startingData = tx.data;
+            while (i < 10000) {
+                var contractAddress = getContractAddress(sender, BigInt(tx.nonce || 0), tx.data || '');
+                var contractShard = getShardForAddress(contractAddress);
+                if (contractShard === toShard) {
+                    return tx;
+                }
+                var salt = randomBytes(32);
+                tx.data = hexlify(concat([String(startingData), salt]));
+                i++;
+            }
+            return tx;
         }
         /**
          *  Return a new **ContractFactory** with the same ABI and bytecode,
@@ -16778,7 +16852,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         contractAddress: allowNull(getAddress, null),
         // should be allowNull(hash), but broken-EIP-658 support is handled in receipt
         index: getNumber,
-        root: allowNull(hexlify),
         gasUsed: getBigInt,
         logsBloom: allowNull(formatData),
         blockHash: formatHash,
@@ -16850,7 +16923,21 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             delete result.etxData;
             delete result.etxAccessList;
         }
-        // @TODO: Check fee data
+        else {
+            //Needed due to go-quai api using both external as naming and etx as naming
+            //External is for when creating an external transaction
+            //Etx is for when reading an external transaction
+            if (result.etxGasLimit == null && value.externalGasLimit != null)
+                result.etxGasLimit = value.externalGasLimit;
+            if (result.etxGasPrice == null && value.externalGasPrice != null)
+                result.etxGasPrice = value.externalGasPrice;
+            if (result.etxGasTip == null && value.externalGasTip != null)
+                result.etxGasTip = value.externalGasTip;
+            if (result.etxData == null && value.externalData != null)
+                result.etxData = value.externalData;
+            if (result.etxAccessList == null && value.externalAccessList != null)
+                result.etxAccessList = value.externalAccessList;
+        }
         // Add an access list to supported transaction types
         if ((value.type === 1 || value.type === 2) && value.accessList == null) {
             result.accessList = [];
@@ -17402,23 +17489,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             }
         });
     }
-    // Used by Optimism for a custom priority fee
-    function getPriorityFeePlugin(maxPriorityFeePerGas) {
-        return new FetchUrlFeeDataNetworkPlugin("data:", async (fetchFeeData, provider, request) => {
-            const feeData = await fetchFeeData();
-            // This should always fail
-            if (feeData.maxFeePerGas == null || feeData.maxPriorityFeePerGas == null) {
-                return feeData;
-            }
-            // Compute the corrected baseFee to recompute the updated values
-            const baseFee = feeData.maxFeePerGas - feeData.maxPriorityFeePerGas;
-            return {
-                gasPrice: feeData.gasPrice,
-                maxFeePerGas: (baseFee + maxPriorityFeePerGas),
-                maxPriorityFeePerGas
-            };
-        });
-    }
     // See: https://chainlist.org
     let injected = false;
     function injectCommonNetworks() {
@@ -17461,6 +17531,9 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             ensNetwork: 1,
         });
         registerEth("arbitrum-goerli", 421613, {});
+        registerEth("base", 8453, { ensNetwork: 1 });
+        registerEth("base-goerli", 84531, {});
+        registerEth("base-sepolia", 84532, {});
         registerEth("bnb", 56, { ensNetwork: 1 });
         registerEth("bnbt", 97, {});
         registerEth("linea", 59144, { ensNetwork: 1 });
@@ -17479,9 +17552,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         });
         registerEth("optimism", 10, {
             ensNetwork: 1,
-            plugins: [
-                getPriorityFeePlugin(BigInt("1000000"))
-            ]
+            plugins: []
         });
         registerEth("optimism-goerli", 420, {});
         registerEth("xdai", 100, { ensNetwork: 1 });
@@ -17568,10 +17639,12 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         if (typeof (_event) === "string") {
             switch (_event) {
                 case "block":
-                case "pending":
                 case "debug":
                 case "error":
-                case "network": {
+                case "finalized":
+                case "network":
+                case "pending":
+                case "safe": {
                     return { type: _event, tag: _event };
                 }
             }
@@ -17869,10 +17942,10 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             switch (blockTag) {
                 case "earliest":
                     return "0x0";
+                case "finalized":
                 case "latest":
                 case "pending":
                 case "safe":
-                case "finalized":
                     return blockTag;
             }
             if (isHexString(blockTag)) {
@@ -18016,16 +18089,19 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             // No explicit network was set and this is our first time
             if (this.#networkPromise == null) {
                 // Detect the current network (shared with all calls)
-                const detectNetwork = this._detectNetwork().then((network) => {
-                    this.emit("network", network, null);
-                    return network;
-                }, (error) => {
-                    // Reset the networkPromise on failure, so we will try again
-                    if (this.#networkPromise === detectNetwork) {
-                        this.#networkPromise = null;
+                const detectNetwork = (async () => {
+                    try {
+                        const network = await this._detectNetwork();
+                        this.emit("network", network, null);
+                        return network;
                     }
-                    throw error;
-                });
+                    catch (error) {
+                        if (this.#networkPromise === detectNetwork) {
+                            this.#networkPromise = null;
+                        }
+                        throw error;
+                    }
+                })();
                 this.#networkPromise = detectNetwork;
                 return (await detectNetwork).clone();
             }
@@ -18055,12 +18131,20 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         async getFeeData() {
             const network = await this.getNetwork();
             const getFeeDataFunc = async () => {
-                const { _block, gasPrice } = await resolveProperties({
+                const { _block, gasPrice, priorityFee } = await resolveProperties({
                     _block: this.#getBlock("latest", false),
                     gasPrice: ((async () => {
                         try {
-                            const gasPrice = await this.#perform({ method: "getGasPrice" });
-                            return getBigInt(gasPrice, "%response");
+                            const value = await this.#perform({ method: "getGasPrice" });
+                            return getBigInt(value, "%response");
+                        }
+                        catch (error) { }
+                        return null;
+                    })()),
+                    priorityFee: ((async () => {
+                        try {
+                            const value = await this.#perform({ method: "getPriorityFee" });
+                            return getBigInt(value, "%response");
                         }
                         catch (error) { }
                         return null;
@@ -18071,7 +18155,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                 // These are the recommended EIP-1559 heuristics for fee data
                 const block = this._wrapBlock(_block, network);
                 if (block && block.baseFeePerGas) {
-                    maxPriorityFeePerGas = BigInt("1000000000");
+                    maxPriorityFeePerGas = (priorityFee != null) ? priorityFee : BigInt("1000000000");
                     maxFeePerGas = (block.baseFeePerGas * BN_2$1) + maxPriorityFeePerGas;
                 }
                 return new FeeData(gasPrice, maxFeePerGas, maxPriorityFeePerGas);
@@ -18926,10 +19010,12 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                 }
             }
             if (pop.type == null) {
-                if (pop.to == null || pop.from == null) {
-                    throw new Error("Cannot determine transaction type, please specify a type or provide a from and to address");
-                }
-                pop.type = await getTxType(pop.from, pop.to);
+                pop.type = await getTxType(pop.from ?? null, pop.to ?? null);
+            }
+            if (pop.type == 2) {
+                pop.externalGasLimit = getBigInt(Number(pop.gasLimit) * 9);
+                pop.externalGasTip = getBigInt(Number(pop.maxPriorityFeePerGas) * 9);
+                pop.externalGasPrice = getBigInt(Number(pop.maxFeePerGas) * 9);
             }
             //@TOOD: Don't await all over the place; save them up for
             // the end for better batching
@@ -18950,7 +19036,6 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             const pop = await this.populateTransaction(tx);
             delete pop.from;
             const txObj = Transaction.from(pop);
-            txObj.chainId = Number(txObj.chainId);
             const signedTx = await this.signTransaction(txObj);
             return await provider.broadcastTransaction(signedTx);
         }
@@ -19326,6 +19411,8 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                     return await provider.getCode(req.address, req.blockTag);
                 case "getGasPrice":
                     return (await provider.getFeeData()).gasPrice;
+                case "getPriorityFee":
+                    return (await provider.getFeeData()).maxPriorityFeePerGas;
                 case "getLogs":
                     return await provider.getLogs(req.filter);
                 case "getStorage":
@@ -19471,6 +19558,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                     return this.#height;
                 }
                 case "getGasPrice":
+                case "getPriorityFee":
                 case "estimateGas":
                     return getMedian(this.quorum, results);
                 case "getBlock":
@@ -19552,15 +19640,46 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             // a cost on the user, so spamming is safe-ish. Just send it to
             // every backend.
             if (req.method === "broadcastTransaction") {
-                const results = await Promise.all(this.#configs.map(async ({ provider, weight }) => {
+                // Once any broadcast provides a positive result, use it. No
+                // need to wait for anyone else
+                const results = this.#configs.map((c) => null);
+                const broadcasts = this.#configs.map(async ({ provider, weight }, index) => {
                     try {
                         const result = await provider._perform(req);
-                        return Object.assign(normalizeResult({ result }), { weight });
+                        results[index] = Object.assign(normalizeResult({ result }), { weight });
                     }
                     catch (error) {
-                        return Object.assign(normalizeResult({ error }), { weight });
+                        results[index] = Object.assign(normalizeResult({ error }), { weight });
                     }
-                }));
+                });
+                // As each promise finishes...
+                while (true) {
+                    // Check for a valid broadcast result
+                    const done = results.filter((r) => (r != null));
+                    for (const { value } of done) {
+                        if (!(value instanceof Error)) {
+                            return value;
+                        }
+                    }
+                    // Check for a legit broadcast error (one which we cannot
+                    // recover from; some nodes may return the following red
+                    // herring events:
+                    // - alredy seend (UNKNOWN_ERROR)
+                    // - NONCE_EXPIRED
+                    // - REPLACEMENT_UNDERPRICED
+                    const result = checkQuorum(this.quorum, results.filter((r) => (r != null)));
+                    if (isError(result, "INSUFFICIENT_FUNDS")) {
+                        throw result;
+                    }
+                    // Kick off the next provider (if any)
+                    const waiting = broadcasts.filter((b, i) => (results[i] == null));
+                    if (waiting.length === 0) {
+                        break;
+                    }
+                    await Promise.race(waiting);
+                }
+                // Use standard quorum results; any result was returned above,
+                // so this will find any error that met quorum if any
                 const result = getAnyResult(this.quorum, results);
                 assert(result !== undefined, "problem multi-broadcasting", "SERVER_ERROR", {
                     request: "%sub-requests",
@@ -19574,8 +19693,16 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             await this.#initialSync();
             // Bootstrap enough runners to meet quorum
             const running = new Set();
-            for (let i = 0; i < this.quorum; i++) {
-                this.#addRunner(running, req);
+            let inflightQuorum = 0;
+            while (true) {
+                const runner = this.#addRunner(running, req);
+                if (runner == null) {
+                    break;
+                }
+                inflightQuorum += runner.config.weight;
+                if (inflightQuorum >= this.quorum) {
+                    break;
+                }
             }
             const result = await this.#waitForQuorum(running, req);
             // Track requests sent to a provider that are still
@@ -19953,14 +20080,12 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             if (promises.length) {
                 await Promise.all(promises);
             }
-            console.log("sendUncheckedTransaction", tx);
             const hexTx = this.provider.getRpcTransaction(tx);
             return this.provider.send("quai_sendTransaction", [hexTx]);
         }
         async sendTransaction(tx) {
             // This cannot be mined any earlier than any recent block
             const blockNumber = await this.provider.getBlockNumber();
-            console.log("sendTransaction", tx);
             // Send the transaction
             const hash = await this.sendUncheckedTransaction(tx);
             // Unfortunately, JSON-RPC only provides and opaque transaction hash
@@ -19968,12 +20093,45 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             // for it; it should show up very quickly
             return await (new Promise((resolve, reject) => {
                 const timeouts = [1000, 100];
+                let invalids = 0;
                 const checkTx = async () => {
-                    // Try getting the transaction
-                    const tx = await this.provider.getTransaction(hash);
-                    if (tx != null) {
-                        resolve(tx.replaceableTransaction(blockNumber));
-                        return;
+                    try {
+                        // Try getting the transaction
+                        const tx = await this.provider.getTransaction(hash);
+                        if (tx != null) {
+                            resolve(tx.replaceableTransaction(blockNumber));
+                            return;
+                        }
+                    }
+                    catch (error) {
+                        // If we were cancelled: stop polling.
+                        // If the data is bad: the node returns bad transactions
+                        // If the network changed: calling again will also fail
+                        // If unsupported: likely destroyed
+                        if (isError(error, "CANCELLED") || isError(error, "BAD_DATA") ||
+                            isError(error, "NETWORK_ERROR" )) {
+                            if (error.info == null) {
+                                error.info = {};
+                            }
+                            error.info.sendTransactionHash = hash;
+                            reject(error);
+                            return;
+                        }
+                        // Stop-gap for misbehaving backends; see #4513
+                        if (isError(error, "INVALID_ARGUMENT")) {
+                            invalids++;
+                            if (error.info == null) {
+                                error.info = {};
+                            }
+                            error.info.sendTransactionHash = hash;
+                            if (invalids > 10) {
+                                reject(error);
+                                return;
+                            }
+                        }
+                        // Notify anyone that cares; but we will try again, since
+                        // it is likely an intermittent service error
+                        this.provider.emit("error", makeError("failed to fetch transation after sending (will try again)", "UNKNOWN_ERROR", { error }));
                     }
                     // Wait another 4 seconds
                     this.provider._setTimeout(() => { checkTx(); }, timeouts.pop() || 4000);
@@ -20046,11 +20204,12 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         #drainTimer;
         #notReady;
         #network;
+        #pendingDetectNetwork;
         #scheduleDrain() {
             if (this.#drainTimer) {
                 return;
             }
-            // If we aren't using batching, no hard in sending it immeidately
+            // If we aren't using batching, no harm in sending it immediately
             const stallTime = (this._getOption("batchMaxCount") === 1) ? 0 : this._getOption("batchStallTime");
             this.#drainTimer = setTimeout(() => {
                 this.#drainTimer = null;
@@ -20121,6 +20280,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             this.#payloads = [];
             this.#drainTimer = null;
             this.#network = null;
+            this.#pendingDetectNetwork = null;
             {
                 let resolve = null;
                 const promise = new Promise((_resolve) => {
@@ -20128,9 +20288,15 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
                 });
                 this.#notReady = { promise, resolve };
             }
-            // Make sure any static network is compatbile with the provided netwrok
             const staticNetwork = this._getOption("staticNetwork");
-            if (staticNetwork) {
+            if (typeof (staticNetwork) === "boolean") {
+                assertArgument(!staticNetwork || network !== "any", "staticNetwork cannot be used on special network 'any'", "options", options);
+                if (staticNetwork && network != null) {
+                    this.#network = Network.from(network);
+                }
+            }
+            else if (staticNetwork) {
+                // Make sure any static network is compatbile with the provided netwrok
                 assertArgument(network == null || staticNetwork.matches(network), "staticNetwork MUST match network object", "options", options);
                 this.#network = staticNetwork;
             }
@@ -20191,30 +20357,56 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
         async _detectNetwork() {
             const network = this._getOption("staticNetwork");
             if (network) {
-                return network;
+                if (network === true) {
+                    if (this.#network) {
+                        return this.#network;
+                    }
+                }
+                else {
+                    return network;
+                }
+            }
+            if (this.#pendingDetectNetwork) {
+                return await this.#pendingDetectNetwork;
             }
             // If we are ready, use ``send``, which enabled requests to be batched
             if (this.ready) {
-                return Network.from(getBigInt(await this.send("quai_chainId", [])));
+                this.#pendingDetectNetwork = (async () => {
+                    try {
+                        const result = Network.from(getBigInt(await this.send("quai_chainId", [])));
+                        this.#pendingDetectNetwork = null;
+                        return result;
+                    }
+                    catch (error) {
+                        this.#pendingDetectNetwork = null;
+                        throw error;
+                    }
+                })();
+                return await this.#pendingDetectNetwork;
             }
             // We are not ready yet; use the primitive _send
-            const payload = {
-                id: this.#nextId++, method: "quai_chainId", params: [], jsonrpc: "2.0"
-            };
-            this.emit("debug", { action: "sendRpcPayload", payload });
-            let result;
-            try {
-                result = (await this._send(payload))[0];
-            }
-            catch (error) {
-                this.emit("debug", { action: "receiveRpcError", error });
-                throw error;
-            }
-            this.emit("debug", { action: "receiveRpcResult", result });
-            if ("result" in result) {
-                return Network.from(getBigInt(result.result));
-            }
-            throw this.getRpcError(payload, result);
+            this.#pendingDetectNetwork = (async () => {
+                const payload = {
+                    id: this.#nextId++, method: "quai_chainId", params: [], jsonrpc: "2.0"
+                };
+                this.emit("debug", { action: "sendRpcPayload", payload });
+                let result;
+                try {
+                    result = (await this._send(payload))[0];
+                    this.#pendingDetectNetwork = null;
+                }
+                catch (error) {
+                    this.#pendingDetectNetwork = null;
+                    this.emit("debug", { action: "receiveRpcError", error });
+                    throw error;
+                }
+                this.emit("debug", { action: "receiveRpcResult", result });
+                if ("result" in result) {
+                    return Network.from(getBigInt(result.result));
+                }
+                throw this.getRpcError(payload, result);
+            })();
+            return await this.#pendingDetectNetwork;
         }
         /**
          *  Sub-classes **MUST** call this. Until [[_start]] has been called, no calls
@@ -20522,6 +20714,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
          *
          *  Throws if the account doesn't exist.
          */
+        // Works only if using a local node or browser wallet for this, otherwise cannot get accounts
         async getSigner(address) {
             if (address == null) {
                 address = 0;
@@ -20841,8 +21034,21 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
          *
          *  If unspecified, the network will be discovered.
          */
-        constructor(network) {
-            super(network, { batchMaxCount: 1 });
+        constructor(network, _options) {
+            // Copy the options
+            const options = Object.assign({}, (_options != null) ? _options : {});
+            // Support for batches is generally not supported for
+            // connection-base providers; if this changes in the future
+            // the _send should be updated to reflect this
+            assertArgument(options.batchMaxCount == null || options.batchMaxCount === 1, "sockets-based providers do not support batches", "options.batchMaxCount", _options);
+            options.batchMaxCount = 1;
+            // Socket-based Providers (generally) cannot change their network,
+            // since they have a long-lived connection; but let people override
+            // this if they have just cause.
+            if (options.staticNetwork == null) {
+                options.staticNetwork = true;
+            }
+            super(network, options);
             this.#callbacks = new Map();
             this.#subs = new Map();
             this.#pending = new Map();
@@ -20986,8 +21192,8 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             }
             return this.#websocket;
         }
-        constructor(url, network) {
-            super(network);
+        constructor(url, network, options) {
+            super(network, options);
             if (typeof (url) === "string") {
                 this.#connect = () => { return new _WebSocket(url); };
                 this.#websocket = this.#connect();
@@ -23219,7 +23425,7 @@ const __$G = (typeof globalThis !== 'undefined' ? globalThis: typeof window !== 
             return Wallet.#fromAccount(account);
         }
         /**
-         *  Creates a new random [[HDNodeWallet]] using the avavilable
+         *  Creates a new random [[HDNodeWallet]] using the available
          *  [cryptographic random source](randomBytes).
          *
          *  If there is no crytographic random source, this will throw.
