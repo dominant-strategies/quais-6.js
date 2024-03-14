@@ -724,6 +724,9 @@ export class AbstractProvider {
         const position = getBigInt(_position, "position");
         return hexlify(await this.#getAccountValue({ method: "getStorage", position }, address, blockTag));
     }
+    async getPendingHeader() {
+        return await this.#perform({ method: "getPendingHeader" });
+    }
     // Write
     async broadcastTransaction(signedTx) {
         const { blockNumber, hash, network } = await resolveProperties({

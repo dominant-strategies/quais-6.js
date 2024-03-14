@@ -4,7 +4,7 @@
 import { getAddress, getCreateAddress } from "../address/index.js";
 import { Signature } from "../crypto/index.js";
 import { accessListify } from "../transaction/index.js";
-import { getBigInt, getNumber, isHexString, zeroPadValue, assert, assertArgument } from "../utils/index.js";
+import { getBigInt, getNumber, isHexString, zeroPadValue, assert, assertArgument, toBeArray } from "../utils/index.js";
 const BN_0 = BigInt(0);
 export function allowNull(format, nullValue) {
     return (function (value) {
@@ -76,6 +76,18 @@ export function formatUint256(value) {
         throw new Error("invalid uint256");
     }
     return zeroPadValue(value, 32);
+}
+export function handleNumber(_value, param) {
+    if (_value === "0x") {
+        return 0;
+    }
+    return getNumber(_value, param);
+}
+export function formatNumber(_value, name) {
+    const value = getBigInt(_value, "value");
+    const result = toBeArray(value);
+    assertArgument(result.length <= 32, `value too large`, `tx.${name}`, value);
+    return result;
 }
 const _formatLog = object({
     address: getAddress,

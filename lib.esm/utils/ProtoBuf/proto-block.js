@@ -8,10 +8,10 @@ import * as pb_1 from "google-protobuf";
 export var block;
 (function (block) {
     class ProtoTransaction extends pb_1.Message {
-        one_of_decls = [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24]];
+        #one_of_decls = [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24]];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("type" in data && data.type != undefined) {
                     this.type = data.type;
@@ -91,7 +91,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 1, 0);
         }
         set type(value) {
-            pb_1.Message.setOneofField(this, 1, this.one_of_decls[0], value);
+            pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
         }
         get has_type() {
             return pb_1.Message.getField(this, 1) != null;
@@ -100,7 +100,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 2, new Uint8Array(0));
         }
         set to(value) {
-            pb_1.Message.setOneofField(this, 2, this.one_of_decls[1], value);
+            pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
         }
         get has_to() {
             return pb_1.Message.getField(this, 2) != null;
@@ -109,7 +109,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 3, 0);
         }
         set nonce(value) {
-            pb_1.Message.setOneofField(this, 3, this.one_of_decls[2], value);
+            pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
         }
         get has_nonce() {
             return pb_1.Message.getField(this, 3) != null;
@@ -118,7 +118,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 4, new Uint8Array(0));
         }
         set value(value) {
-            pb_1.Message.setOneofField(this, 4, this.one_of_decls[3], value);
+            pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
         }
         get has_value() {
             return pb_1.Message.getField(this, 4) != null;
@@ -127,7 +127,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 5, 0);
         }
         set gas(value) {
-            pb_1.Message.setOneofField(this, 5, this.one_of_decls[4], value);
+            pb_1.Message.setOneofField(this, 5, this.#one_of_decls[4], value);
         }
         get has_gas() {
             return pb_1.Message.getField(this, 5) != null;
@@ -136,7 +136,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 6, new Uint8Array(0));
         }
         set data(value) {
-            pb_1.Message.setOneofField(this, 6, this.one_of_decls[5], value);
+            pb_1.Message.setOneofField(this, 6, this.#one_of_decls[5], value);
         }
         get has_data() {
             return pb_1.Message.getField(this, 6) != null;
@@ -145,7 +145,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 7, new Uint8Array(0));
         }
         set chain_id(value) {
-            pb_1.Message.setOneofField(this, 7, this.one_of_decls[6], value);
+            pb_1.Message.setOneofField(this, 7, this.#one_of_decls[6], value);
         }
         get has_chain_id() {
             return pb_1.Message.getField(this, 7) != null;
@@ -154,7 +154,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 8, new Uint8Array(0));
         }
         set gas_fee_cap(value) {
-            pb_1.Message.setOneofField(this, 8, this.one_of_decls[7], value);
+            pb_1.Message.setOneofField(this, 8, this.#one_of_decls[7], value);
         }
         get has_gas_fee_cap() {
             return pb_1.Message.getField(this, 8) != null;
@@ -163,7 +163,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 9, new Uint8Array(0));
         }
         set gas_tip_cap(value) {
-            pb_1.Message.setOneofField(this, 9, this.one_of_decls[8], value);
+            pb_1.Message.setOneofField(this, 9, this.#one_of_decls[8], value);
         }
         get has_gas_tip_cap() {
             return pb_1.Message.getField(this, 9) != null;
@@ -172,7 +172,7 @@ export var block;
             return pb_1.Message.getWrapperField(this, ProtoAccessList, 10);
         }
         set access_list(value) {
-            pb_1.Message.setOneofWrapperField(this, 10, this.one_of_decls[9], value);
+            pb_1.Message.setOneofWrapperField(this, 10, this.#one_of_decls[9], value);
         }
         get has_access_list() {
             return pb_1.Message.getField(this, 10) != null;
@@ -181,7 +181,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 11, 0);
         }
         set etx_gas_limit(value) {
-            pb_1.Message.setOneofField(this, 11, this.one_of_decls[10], value);
+            pb_1.Message.setOneofField(this, 11, this.#one_of_decls[10], value);
         }
         get has_etx_gas_limit() {
             return pb_1.Message.getField(this, 11) != null;
@@ -190,7 +190,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 12, new Uint8Array(0));
         }
         set etx_gas_price(value) {
-            pb_1.Message.setOneofField(this, 12, this.one_of_decls[11], value);
+            pb_1.Message.setOneofField(this, 12, this.#one_of_decls[11], value);
         }
         get has_etx_gas_price() {
             return pb_1.Message.getField(this, 12) != null;
@@ -199,7 +199,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 13, new Uint8Array(0));
         }
         set etx_gas_tip(value) {
-            pb_1.Message.setOneofField(this, 13, this.one_of_decls[12], value);
+            pb_1.Message.setOneofField(this, 13, this.#one_of_decls[12], value);
         }
         get has_etx_gas_tip() {
             return pb_1.Message.getField(this, 13) != null;
@@ -208,7 +208,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 14, new Uint8Array(0));
         }
         set etx_data(value) {
-            pb_1.Message.setOneofField(this, 14, this.one_of_decls[13], value);
+            pb_1.Message.setOneofField(this, 14, this.#one_of_decls[13], value);
         }
         get has_etx_data() {
             return pb_1.Message.getField(this, 14) != null;
@@ -217,7 +217,7 @@ export var block;
             return pb_1.Message.getWrapperField(this, ProtoAccessList, 15);
         }
         set etx_access_list(value) {
-            pb_1.Message.setOneofWrapperField(this, 15, this.one_of_decls[14], value);
+            pb_1.Message.setOneofWrapperField(this, 15, this.#one_of_decls[14], value);
         }
         get has_etx_access_list() {
             return pb_1.Message.getField(this, 15) != null;
@@ -226,7 +226,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 16, new Uint8Array(0));
         }
         set v(value) {
-            pb_1.Message.setOneofField(this, 16, this.one_of_decls[15], value);
+            pb_1.Message.setOneofField(this, 16, this.#one_of_decls[15], value);
         }
         get has_v() {
             return pb_1.Message.getField(this, 16) != null;
@@ -235,7 +235,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 17, new Uint8Array(0));
         }
         set r(value) {
-            pb_1.Message.setOneofField(this, 17, this.one_of_decls[16], value);
+            pb_1.Message.setOneofField(this, 17, this.#one_of_decls[16], value);
         }
         get has_r() {
             return pb_1.Message.getField(this, 17) != null;
@@ -244,7 +244,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 18, new Uint8Array(0));
         }
         set s(value) {
-            pb_1.Message.setOneofField(this, 18, this.one_of_decls[17], value);
+            pb_1.Message.setOneofField(this, 18, this.#one_of_decls[17], value);
         }
         get has_s() {
             return pb_1.Message.getField(this, 18) != null;
@@ -253,7 +253,7 @@ export var block;
             return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 19);
         }
         set originating_tx_hash(value) {
-            pb_1.Message.setOneofWrapperField(this, 19, this.one_of_decls[18], value);
+            pb_1.Message.setOneofWrapperField(this, 19, this.#one_of_decls[18], value);
         }
         get has_originating_tx_hash() {
             return pb_1.Message.getField(this, 19) != null;
@@ -262,7 +262,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 20, 0);
         }
         set etx_index(value) {
-            pb_1.Message.setOneofField(this, 20, this.one_of_decls[19], value);
+            pb_1.Message.setOneofField(this, 20, this.#one_of_decls[19], value);
         }
         get has_etx_index() {
             return pb_1.Message.getField(this, 20) != null;
@@ -271,7 +271,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 21, new Uint8Array(0));
         }
         set etx_sender(value) {
-            pb_1.Message.setOneofField(this, 21, this.one_of_decls[20], value);
+            pb_1.Message.setOneofField(this, 21, this.#one_of_decls[20], value);
         }
         get has_etx_sender() {
             return pb_1.Message.getField(this, 21) != null;
@@ -280,7 +280,7 @@ export var block;
             return pb_1.Message.getWrapperField(this, ProtoTxIns, 22);
         }
         set tx_ins(value) {
-            pb_1.Message.setOneofWrapperField(this, 22, this.one_of_decls[21], value);
+            pb_1.Message.setOneofWrapperField(this, 22, this.#one_of_decls[21], value);
         }
         get has_tx_ins() {
             return pb_1.Message.getField(this, 22) != null;
@@ -289,7 +289,7 @@ export var block;
             return pb_1.Message.getWrapperField(this, ProtoTxOuts, 23);
         }
         set tx_outs(value) {
-            pb_1.Message.setOneofWrapperField(this, 23, this.one_of_decls[22], value);
+            pb_1.Message.setOneofWrapperField(this, 23, this.#one_of_decls[22], value);
         }
         get has_tx_outs() {
             return pb_1.Message.getField(this, 23) != null;
@@ -298,7 +298,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 24, new Uint8Array(0));
         }
         set signature(value) {
-            pb_1.Message.setOneofField(this, 24, this.one_of_decls[23], value);
+            pb_1.Message.setOneofField(this, 24, this.#one_of_decls[23], value);
         }
         get has_signature() {
             return pb_1.Message.getField(this, 24) != null;
@@ -767,11 +767,191 @@ export var block;
         }
     }
     block.ProtoTransaction = ProtoTransaction;
-    class ProtoAccessList extends pb_1.Message {
-        one_of_decls = [];
+    class ProtoTransactions extends pb_1.Message {
+        #one_of_decls = [];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("transactions" in data && data.transactions != undefined) {
+                    this.transactions = data.transactions;
+                }
+            }
+        }
+        get transactions() {
+            return pb_1.Message.getRepeatedWrapperField(this, ProtoTransaction, 1);
+        }
+        set transactions(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+        }
+        static fromObject(data) {
+            const message = new ProtoTransactions({});
+            if (data.transactions != null) {
+                message.transactions = data.transactions.map(item => ProtoTransaction.fromObject(item));
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.transactions != null) {
+                data.transactions = this.transactions.map((item) => item.toObject());
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.transactions.length)
+                writer.writeRepeatedMessage(1, this.transactions, (item) => item.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoTransactions();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.transactions, () => pb_1.Message.addToRepeatedWrapperField(message, 1, ProtoTransaction.deserialize(reader), ProtoTransaction));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoTransactions.deserialize(bytes);
+        }
+    }
+    block.ProtoTransactions = ProtoTransactions;
+    class ProtoHeaders extends pb_1.Message {
+        #one_of_decls = [];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("headers" in data && data.headers != undefined) {
+                    this.headers = data.headers;
+                }
+            }
+        }
+        get headers() {
+            return pb_1.Message.getRepeatedWrapperField(this, ProtoHeader, 1);
+        }
+        set headers(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+        }
+        static fromObject(data) {
+            const message = new ProtoHeaders({});
+            if (data.headers != null) {
+                message.headers = data.headers.map(item => ProtoHeader.fromObject(item));
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.headers != null) {
+                data.headers = this.headers.map((item) => item.toObject());
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.headers.length)
+                writer.writeRepeatedMessage(1, this.headers, (item) => item.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoHeaders();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.headers, () => pb_1.Message.addToRepeatedWrapperField(message, 1, ProtoHeader.deserialize(reader), ProtoHeader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoHeaders.deserialize(bytes);
+        }
+    }
+    block.ProtoHeaders = ProtoHeaders;
+    class ProtoManifest extends pb_1.Message {
+        #one_of_decls = [];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("manifest" in data && data.manifest != undefined) {
+                    this.manifest = data.manifest;
+                }
+            }
+        }
+        get manifest() {
+            return pb_1.Message.getRepeatedWrapperField(this, dependency_1.common.ProtoHash, 1);
+        }
+        set manifest(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+        }
+        static fromObject(data) {
+            const message = new ProtoManifest({});
+            if (data.manifest != null) {
+                message.manifest = data.manifest.map(item => dependency_1.common.ProtoHash.fromObject(item));
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.manifest != null) {
+                data.manifest = this.manifest.map((item) => item.toObject());
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.manifest.length)
+                writer.writeRepeatedMessage(1, this.manifest, (item) => item.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoManifest();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.manifest, () => pb_1.Message.addToRepeatedWrapperField(message, 1, dependency_1.common.ProtoHash.deserialize(reader), dependency_1.common.ProtoHash));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoManifest.deserialize(bytes);
+        }
+    }
+    block.ProtoManifest = ProtoManifest;
+    class ProtoAccessList extends pb_1.Message {
+        #one_of_decls = [];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("access_tuples" in data && data.access_tuples != undefined) {
                     this.access_tuples = data.access_tuples;
@@ -828,10 +1008,10 @@ export var block;
     }
     block.ProtoAccessList = ProtoAccessList;
     class ProtoTxIns extends pb_1.Message {
-        one_of_decls = [];
+        #one_of_decls = [];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("tx_ins" in data && data.tx_ins != undefined) {
                     this.tx_ins = data.tx_ins;
@@ -888,10 +1068,10 @@ export var block;
     }
     block.ProtoTxIns = ProtoTxIns;
     class ProtoTxOuts extends pb_1.Message {
-        one_of_decls = [];
+        #one_of_decls = [];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("tx_outs" in data && data.tx_outs != undefined) {
                     this.tx_outs = data.tx_outs;
@@ -948,10 +1128,10 @@ export var block;
     }
     block.ProtoTxOuts = ProtoTxOuts;
     class ProtoTxIn extends pb_1.Message {
-        one_of_decls = [[1], [2]];
+        #one_of_decls = [[1], [2]];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("previous_out_point" in data && data.previous_out_point != undefined) {
                     this.previous_out_point = data.previous_out_point;
@@ -965,7 +1145,7 @@ export var block;
             return pb_1.Message.getWrapperField(this, ProtoOutPoint, 1);
         }
         set previous_out_point(value) {
-            pb_1.Message.setOneofWrapperField(this, 1, this.one_of_decls[0], value);
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
         }
         get has_previous_out_point() {
             return pb_1.Message.getField(this, 1) != null;
@@ -974,7 +1154,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 2, new Uint8Array(0));
         }
         set pub_key(value) {
-            pb_1.Message.setOneofField(this, 2, this.one_of_decls[1], value);
+            pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
         }
         get has_pub_key() {
             return pb_1.Message.getField(this, 2) != null;
@@ -1048,10 +1228,10 @@ export var block;
     }
     block.ProtoTxIn = ProtoTxIn;
     class ProtoOutPoint extends pb_1.Message {
-        one_of_decls = [[1], [2]];
+        #one_of_decls = [[1], [2]];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("hash" in data && data.hash != undefined) {
                     this.hash = data.hash;
@@ -1065,7 +1245,7 @@ export var block;
             return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 1);
         }
         set hash(value) {
-            pb_1.Message.setOneofWrapperField(this, 1, this.one_of_decls[0], value);
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
         }
         get has_hash() {
             return pb_1.Message.getField(this, 1) != null;
@@ -1074,7 +1254,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 2, 0);
         }
         set index(value) {
-            pb_1.Message.setOneofField(this, 2, this.one_of_decls[1], value);
+            pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
         }
         get has_index() {
             return pb_1.Message.getField(this, 2) != null;
@@ -1148,10 +1328,10 @@ export var block;
     }
     block.ProtoOutPoint = ProtoOutPoint;
     class ProtoTxOut extends pb_1.Message {
-        one_of_decls = [[1], [2]];
+        #one_of_decls = [[1], [2]];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("denomination" in data && data.denomination != undefined) {
                     this.denomination = data.denomination;
@@ -1165,7 +1345,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 1, 0);
         }
         set denomination(value) {
-            pb_1.Message.setOneofField(this, 1, this.one_of_decls[0], value);
+            pb_1.Message.setOneofField(this, 1, this.#one_of_decls[0], value);
         }
         get has_denomination() {
             return pb_1.Message.getField(this, 1) != null;
@@ -1174,7 +1354,7 @@ export var block;
             return pb_1.Message.getFieldWithDefault(this, 2, new Uint8Array(0));
         }
         set address(value) {
-            pb_1.Message.setOneofField(this, 2, this.one_of_decls[1], value);
+            pb_1.Message.setOneofField(this, 2, this.#one_of_decls[1], value);
         }
         get has_address() {
             return pb_1.Message.getField(this, 2) != null;
@@ -1248,10 +1428,10 @@ export var block;
     }
     block.ProtoTxOut = ProtoTxOut;
     class ProtoAccessTuple extends pb_1.Message {
-        one_of_decls = [];
+        #one_of_decls = [];
         constructor(data) {
             super();
-            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [2], this.one_of_decls);
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [2], this.#one_of_decls);
             if (!Array.isArray(data) && typeof data == "object") {
                 if ("address" in data && data.address != undefined) {
                     this.address = data.address;
@@ -1327,5 +1507,1725 @@ export var block;
         }
     }
     block.ProtoAccessTuple = ProtoAccessTuple;
+    class ProtoBlock extends pb_1.Message {
+        #one_of_decls = [[1], [2]];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("header" in data && data.header != undefined) {
+                    this.header = data.header;
+                }
+                if ("body" in data && data.body != undefined) {
+                    this.body = data.body;
+                }
+            }
+        }
+        get header() {
+            return pb_1.Message.getWrapperField(this, ProtoHeader, 1);
+        }
+        set header(value) {
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+        }
+        get has_header() {
+            return pb_1.Message.getField(this, 1) != null;
+        }
+        get body() {
+            return pb_1.Message.getWrapperField(this, ProtoBody, 2);
+        }
+        set body(value) {
+            pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+        }
+        get has_body() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+        get _header() {
+            const cases = {
+                0: "none",
+                1: "header"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [1])];
+        }
+        get _body() {
+            const cases = {
+                0: "none",
+                2: "body"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [2])];
+        }
+        static fromObject(data) {
+            const message = new ProtoBlock({});
+            if (data.header != null) {
+                message.header = ProtoHeader.fromObject(data.header);
+            }
+            if (data.body != null) {
+                message.body = ProtoBody.fromObject(data.body);
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.header != null) {
+                data.header = this.header.toObject();
+            }
+            if (this.body != null) {
+                data.body = this.body.toObject();
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.has_header)
+                writer.writeMessage(1, this.header, () => this.header.serialize(writer));
+            if (this.has_body)
+                writer.writeMessage(2, this.body, () => this.body.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoBlock();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.header, () => message.header = ProtoHeader.deserialize(reader));
+                        break;
+                    case 2:
+                        reader.readMessage(message.body, () => message.body = ProtoBody.deserialize(reader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoBlock.deserialize(bytes);
+        }
+    }
+    block.ProtoBlock = ProtoBlock;
+    class ProtoBody extends pb_1.Message {
+        #one_of_decls = [[1], [2], [3], [4]];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("txs" in data && data.txs != undefined) {
+                    this.txs = data.txs;
+                }
+                if ("uncles" in data && data.uncles != undefined) {
+                    this.uncles = data.uncles;
+                }
+                if ("etxs" in data && data.etxs != undefined) {
+                    this.etxs = data.etxs;
+                }
+                if ("manifest" in data && data.manifest != undefined) {
+                    this.manifest = data.manifest;
+                }
+            }
+        }
+        get txs() {
+            return pb_1.Message.getWrapperField(this, ProtoTransactions, 1);
+        }
+        set txs(value) {
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+        }
+        get has_txs() {
+            return pb_1.Message.getField(this, 1) != null;
+        }
+        get uncles() {
+            return pb_1.Message.getWrapperField(this, ProtoHeaders, 2);
+        }
+        set uncles(value) {
+            pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+        }
+        get has_uncles() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+        get etxs() {
+            return pb_1.Message.getWrapperField(this, ProtoTransactions, 3);
+        }
+        set etxs(value) {
+            pb_1.Message.setOneofWrapperField(this, 3, this.#one_of_decls[2], value);
+        }
+        get has_etxs() {
+            return pb_1.Message.getField(this, 3) != null;
+        }
+        get manifest() {
+            return pb_1.Message.getWrapperField(this, ProtoManifest, 4);
+        }
+        set manifest(value) {
+            pb_1.Message.setOneofWrapperField(this, 4, this.#one_of_decls[3], value);
+        }
+        get has_manifest() {
+            return pb_1.Message.getField(this, 4) != null;
+        }
+        get _txs() {
+            const cases = {
+                0: "none",
+                1: "txs"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [1])];
+        }
+        get _uncles() {
+            const cases = {
+                0: "none",
+                2: "uncles"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [2])];
+        }
+        get _etxs() {
+            const cases = {
+                0: "none",
+                3: "etxs"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [3])];
+        }
+        get _manifest() {
+            const cases = {
+                0: "none",
+                4: "manifest"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [4])];
+        }
+        static fromObject(data) {
+            const message = new ProtoBody({});
+            if (data.txs != null) {
+                message.txs = ProtoTransactions.fromObject(data.txs);
+            }
+            if (data.uncles != null) {
+                message.uncles = ProtoHeaders.fromObject(data.uncles);
+            }
+            if (data.etxs != null) {
+                message.etxs = ProtoTransactions.fromObject(data.etxs);
+            }
+            if (data.manifest != null) {
+                message.manifest = ProtoManifest.fromObject(data.manifest);
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.txs != null) {
+                data.txs = this.txs.toObject();
+            }
+            if (this.uncles != null) {
+                data.uncles = this.uncles.toObject();
+            }
+            if (this.etxs != null) {
+                data.etxs = this.etxs.toObject();
+            }
+            if (this.manifest != null) {
+                data.manifest = this.manifest.toObject();
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.has_txs)
+                writer.writeMessage(1, this.txs, () => this.txs.serialize(writer));
+            if (this.has_uncles)
+                writer.writeMessage(2, this.uncles, () => this.uncles.serialize(writer));
+            if (this.has_etxs)
+                writer.writeMessage(3, this.etxs, () => this.etxs.serialize(writer));
+            if (this.has_manifest)
+                writer.writeMessage(4, this.manifest, () => this.manifest.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoBody();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.txs, () => message.txs = ProtoTransactions.deserialize(reader));
+                        break;
+                    case 2:
+                        reader.readMessage(message.uncles, () => message.uncles = ProtoHeaders.deserialize(reader));
+                        break;
+                    case 3:
+                        reader.readMessage(message.etxs, () => message.etxs = ProtoTransactions.deserialize(reader));
+                        break;
+                    case 4:
+                        reader.readMessage(message.manifest, () => message.manifest = ProtoManifest.deserialize(reader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoBody.deserialize(bytes);
+        }
+    }
+    block.ProtoBody = ProtoBody;
+    class ProtoHeader extends pb_1.Message {
+        #one_of_decls = [[2], [3], [4], [5], [6], [7], [9], [10], [14], [15], [16], [17], [18], [19], [20], [21], [22]];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 8, 11, 12, 13], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("parent_hash" in data && data.parent_hash != undefined) {
+                    this.parent_hash = data.parent_hash;
+                }
+                if ("uncle_hash" in data && data.uncle_hash != undefined) {
+                    this.uncle_hash = data.uncle_hash;
+                }
+                if ("coinbase" in data && data.coinbase != undefined) {
+                    this.coinbase = data.coinbase;
+                }
+                if ("evm_root" in data && data.evm_root != undefined) {
+                    this.evm_root = data.evm_root;
+                }
+                if ("tx_hash" in data && data.tx_hash != undefined) {
+                    this.tx_hash = data.tx_hash;
+                }
+                if ("etx_hash" in data && data.etx_hash != undefined) {
+                    this.etx_hash = data.etx_hash;
+                }
+                if ("etx_rollup_hash" in data && data.etx_rollup_hash != undefined) {
+                    this.etx_rollup_hash = data.etx_rollup_hash;
+                }
+                if ("manifest_hash" in data && data.manifest_hash != undefined) {
+                    this.manifest_hash = data.manifest_hash;
+                }
+                if ("receipt_hash" in data && data.receipt_hash != undefined) {
+                    this.receipt_hash = data.receipt_hash;
+                }
+                if ("difficulty" in data && data.difficulty != undefined) {
+                    this.difficulty = data.difficulty;
+                }
+                if ("parent_entropy" in data && data.parent_entropy != undefined) {
+                    this.parent_entropy = data.parent_entropy;
+                }
+                if ("parent_delta_s" in data && data.parent_delta_s != undefined) {
+                    this.parent_delta_s = data.parent_delta_s;
+                }
+                if ("number" in data && data.number != undefined) {
+                    this.number = data.number;
+                }
+                if ("gas_limit" in data && data.gas_limit != undefined) {
+                    this.gas_limit = data.gas_limit;
+                }
+                if ("gas_used" in data && data.gas_used != undefined) {
+                    this.gas_used = data.gas_used;
+                }
+                if ("base_fee" in data && data.base_fee != undefined) {
+                    this.base_fee = data.base_fee;
+                }
+                if ("location" in data && data.location != undefined) {
+                    this.location = data.location;
+                }
+                if ("time" in data && data.time != undefined) {
+                    this.time = data.time;
+                }
+                if ("extra" in data && data.extra != undefined) {
+                    this.extra = data.extra;
+                }
+                if ("mix_hash" in data && data.mix_hash != undefined) {
+                    this.mix_hash = data.mix_hash;
+                }
+                if ("nonce" in data && data.nonce != undefined) {
+                    this.nonce = data.nonce;
+                }
+                if ("utxo_root" in data && data.utxo_root != undefined) {
+                    this.utxo_root = data.utxo_root;
+                }
+            }
+        }
+        get parent_hash() {
+            return pb_1.Message.getRepeatedWrapperField(this, dependency_1.common.ProtoHash, 1);
+        }
+        set parent_hash(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+        }
+        get uncle_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 2);
+        }
+        set uncle_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[0], value);
+        }
+        get has_uncle_hash() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+        get coinbase() {
+            return pb_1.Message.getFieldWithDefault(this, 3, new Uint8Array(0));
+        }
+        set coinbase(value) {
+            pb_1.Message.setOneofField(this, 3, this.#one_of_decls[1], value);
+        }
+        get has_coinbase() {
+            return pb_1.Message.getField(this, 3) != null;
+        }
+        get evm_root() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 4);
+        }
+        set evm_root(value) {
+            pb_1.Message.setOneofWrapperField(this, 4, this.#one_of_decls[2], value);
+        }
+        get has_evm_root() {
+            return pb_1.Message.getField(this, 4) != null;
+        }
+        get tx_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 5);
+        }
+        set tx_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 5, this.#one_of_decls[3], value);
+        }
+        get has_tx_hash() {
+            return pb_1.Message.getField(this, 5) != null;
+        }
+        get etx_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 6);
+        }
+        set etx_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 6, this.#one_of_decls[4], value);
+        }
+        get has_etx_hash() {
+            return pb_1.Message.getField(this, 6) != null;
+        }
+        get etx_rollup_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 7);
+        }
+        set etx_rollup_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 7, this.#one_of_decls[5], value);
+        }
+        get has_etx_rollup_hash() {
+            return pb_1.Message.getField(this, 7) != null;
+        }
+        get manifest_hash() {
+            return pb_1.Message.getRepeatedWrapperField(this, dependency_1.common.ProtoHash, 8);
+        }
+        set manifest_hash(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 8, value);
+        }
+        get receipt_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 9);
+        }
+        set receipt_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 9, this.#one_of_decls[6], value);
+        }
+        get has_receipt_hash() {
+            return pb_1.Message.getField(this, 9) != null;
+        }
+        get difficulty() {
+            return pb_1.Message.getFieldWithDefault(this, 10, new Uint8Array(0));
+        }
+        set difficulty(value) {
+            pb_1.Message.setOneofField(this, 10, this.#one_of_decls[7], value);
+        }
+        get has_difficulty() {
+            return pb_1.Message.getField(this, 10) != null;
+        }
+        get parent_entropy() {
+            return pb_1.Message.getFieldWithDefault(this, 11, []);
+        }
+        set parent_entropy(value) {
+            pb_1.Message.setField(this, 11, value);
+        }
+        get parent_delta_s() {
+            return pb_1.Message.getFieldWithDefault(this, 12, []);
+        }
+        set parent_delta_s(value) {
+            pb_1.Message.setField(this, 12, value);
+        }
+        get number() {
+            return pb_1.Message.getFieldWithDefault(this, 13, []);
+        }
+        set number(value) {
+            pb_1.Message.setField(this, 13, value);
+        }
+        get gas_limit() {
+            return pb_1.Message.getFieldWithDefault(this, 14, 0);
+        }
+        set gas_limit(value) {
+            pb_1.Message.setOneofField(this, 14, this.#one_of_decls[8], value);
+        }
+        get has_gas_limit() {
+            return pb_1.Message.getField(this, 14) != null;
+        }
+        get gas_used() {
+            return pb_1.Message.getFieldWithDefault(this, 15, 0);
+        }
+        set gas_used(value) {
+            pb_1.Message.setOneofField(this, 15, this.#one_of_decls[9], value);
+        }
+        get has_gas_used() {
+            return pb_1.Message.getField(this, 15) != null;
+        }
+        get base_fee() {
+            return pb_1.Message.getFieldWithDefault(this, 16, new Uint8Array(0));
+        }
+        set base_fee(value) {
+            pb_1.Message.setOneofField(this, 16, this.#one_of_decls[10], value);
+        }
+        get has_base_fee() {
+            return pb_1.Message.getField(this, 16) != null;
+        }
+        get location() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoLocation, 17);
+        }
+        set location(value) {
+            pb_1.Message.setOneofWrapperField(this, 17, this.#one_of_decls[11], value);
+        }
+        get has_location() {
+            return pb_1.Message.getField(this, 17) != null;
+        }
+        get time() {
+            return pb_1.Message.getFieldWithDefault(this, 18, 0);
+        }
+        set time(value) {
+            pb_1.Message.setOneofField(this, 18, this.#one_of_decls[12], value);
+        }
+        get has_time() {
+            return pb_1.Message.getField(this, 18) != null;
+        }
+        get extra() {
+            return pb_1.Message.getFieldWithDefault(this, 19, new Uint8Array(0));
+        }
+        set extra(value) {
+            pb_1.Message.setOneofField(this, 19, this.#one_of_decls[13], value);
+        }
+        get has_extra() {
+            return pb_1.Message.getField(this, 19) != null;
+        }
+        get mix_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 20);
+        }
+        set mix_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 20, this.#one_of_decls[14], value);
+        }
+        get has_mix_hash() {
+            return pb_1.Message.getField(this, 20) != null;
+        }
+        get nonce() {
+            return pb_1.Message.getFieldWithDefault(this, 21, 0);
+        }
+        set nonce(value) {
+            pb_1.Message.setOneofField(this, 21, this.#one_of_decls[15], value);
+        }
+        get has_nonce() {
+            return pb_1.Message.getField(this, 21) != null;
+        }
+        get utxo_root() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 22);
+        }
+        set utxo_root(value) {
+            pb_1.Message.setOneofWrapperField(this, 22, this.#one_of_decls[16], value);
+        }
+        get has_utxo_root() {
+            return pb_1.Message.getField(this, 22) != null;
+        }
+        get _uncle_hash() {
+            const cases = {
+                0: "none",
+                2: "uncle_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [2])];
+        }
+        get _coinbase() {
+            const cases = {
+                0: "none",
+                3: "coinbase"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [3])];
+        }
+        get _evm_root() {
+            const cases = {
+                0: "none",
+                4: "evm_root"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [4])];
+        }
+        get _tx_hash() {
+            const cases = {
+                0: "none",
+                5: "tx_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [5])];
+        }
+        get _etx_hash() {
+            const cases = {
+                0: "none",
+                6: "etx_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [6])];
+        }
+        get _etx_rollup_hash() {
+            const cases = {
+                0: "none",
+                7: "etx_rollup_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [7])];
+        }
+        get _receipt_hash() {
+            const cases = {
+                0: "none",
+                9: "receipt_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [9])];
+        }
+        get _difficulty() {
+            const cases = {
+                0: "none",
+                10: "difficulty"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [10])];
+        }
+        get _gas_limit() {
+            const cases = {
+                0: "none",
+                14: "gas_limit"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [14])];
+        }
+        get _gas_used() {
+            const cases = {
+                0: "none",
+                15: "gas_used"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [15])];
+        }
+        get _base_fee() {
+            const cases = {
+                0: "none",
+                16: "base_fee"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [16])];
+        }
+        get _location() {
+            const cases = {
+                0: "none",
+                17: "location"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [17])];
+        }
+        get _time() {
+            const cases = {
+                0: "none",
+                18: "time"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [18])];
+        }
+        get _extra() {
+            const cases = {
+                0: "none",
+                19: "extra"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [19])];
+        }
+        get _mix_hash() {
+            const cases = {
+                0: "none",
+                20: "mix_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [20])];
+        }
+        get _nonce() {
+            const cases = {
+                0: "none",
+                21: "nonce"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [21])];
+        }
+        get _utxo_root() {
+            const cases = {
+                0: "none",
+                22: "utxo_root"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [22])];
+        }
+        static fromObject(data) {
+            const message = new ProtoHeader({});
+            if (data.parent_hash != null) {
+                message.parent_hash = data.parent_hash.map(item => dependency_1.common.ProtoHash.fromObject(item));
+            }
+            if (data.uncle_hash != null) {
+                message.uncle_hash = dependency_1.common.ProtoHash.fromObject(data.uncle_hash);
+            }
+            if (data.coinbase != null) {
+                message.coinbase = data.coinbase;
+            }
+            if (data.evm_root != null) {
+                message.evm_root = dependency_1.common.ProtoHash.fromObject(data.evm_root);
+            }
+            if (data.tx_hash != null) {
+                message.tx_hash = dependency_1.common.ProtoHash.fromObject(data.tx_hash);
+            }
+            if (data.etx_hash != null) {
+                message.etx_hash = dependency_1.common.ProtoHash.fromObject(data.etx_hash);
+            }
+            if (data.etx_rollup_hash != null) {
+                message.etx_rollup_hash = dependency_1.common.ProtoHash.fromObject(data.etx_rollup_hash);
+            }
+            if (data.manifest_hash != null) {
+                message.manifest_hash = data.manifest_hash.map(item => dependency_1.common.ProtoHash.fromObject(item));
+            }
+            if (data.receipt_hash != null) {
+                message.receipt_hash = dependency_1.common.ProtoHash.fromObject(data.receipt_hash);
+            }
+            if (data.difficulty != null) {
+                message.difficulty = data.difficulty;
+            }
+            if (data.parent_entropy != null) {
+                message.parent_entropy = data.parent_entropy;
+            }
+            if (data.parent_delta_s != null) {
+                message.parent_delta_s = data.parent_delta_s;
+            }
+            if (data.number != null) {
+                message.number = data.number;
+            }
+            if (data.gas_limit != null) {
+                message.gas_limit = data.gas_limit;
+            }
+            if (data.gas_used != null) {
+                message.gas_used = data.gas_used;
+            }
+            if (data.base_fee != null) {
+                message.base_fee = data.base_fee;
+            }
+            if (data.location != null) {
+                message.location = dependency_1.common.ProtoLocation.fromObject(data.location);
+            }
+            if (data.time != null) {
+                message.time = data.time;
+            }
+            if (data.extra != null) {
+                message.extra = data.extra;
+            }
+            if (data.mix_hash != null) {
+                message.mix_hash = dependency_1.common.ProtoHash.fromObject(data.mix_hash);
+            }
+            if (data.nonce != null) {
+                message.nonce = data.nonce;
+            }
+            if (data.utxo_root != null) {
+                message.utxo_root = dependency_1.common.ProtoHash.fromObject(data.utxo_root);
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.parent_hash != null) {
+                data.parent_hash = this.parent_hash.map((item) => item.toObject());
+            }
+            if (this.uncle_hash != null) {
+                data.uncle_hash = this.uncle_hash.toObject();
+            }
+            if (this.coinbase != null) {
+                data.coinbase = this.coinbase;
+            }
+            if (this.evm_root != null) {
+                data.evm_root = this.evm_root.toObject();
+            }
+            if (this.tx_hash != null) {
+                data.tx_hash = this.tx_hash.toObject();
+            }
+            if (this.etx_hash != null) {
+                data.etx_hash = this.etx_hash.toObject();
+            }
+            if (this.etx_rollup_hash != null) {
+                data.etx_rollup_hash = this.etx_rollup_hash.toObject();
+            }
+            if (this.manifest_hash != null) {
+                data.manifest_hash = this.manifest_hash.map((item) => item.toObject());
+            }
+            if (this.receipt_hash != null) {
+                data.receipt_hash = this.receipt_hash.toObject();
+            }
+            if (this.difficulty != null) {
+                data.difficulty = this.difficulty;
+            }
+            if (this.parent_entropy != null) {
+                data.parent_entropy = this.parent_entropy;
+            }
+            if (this.parent_delta_s != null) {
+                data.parent_delta_s = this.parent_delta_s;
+            }
+            if (this.number != null) {
+                data.number = this.number;
+            }
+            if (this.gas_limit != null) {
+                data.gas_limit = this.gas_limit;
+            }
+            if (this.gas_used != null) {
+                data.gas_used = this.gas_used;
+            }
+            if (this.base_fee != null) {
+                data.base_fee = this.base_fee;
+            }
+            if (this.location != null) {
+                data.location = this.location.toObject();
+            }
+            if (this.time != null) {
+                data.time = this.time;
+            }
+            if (this.extra != null) {
+                data.extra = this.extra;
+            }
+            if (this.mix_hash != null) {
+                data.mix_hash = this.mix_hash.toObject();
+            }
+            if (this.nonce != null) {
+                data.nonce = this.nonce;
+            }
+            if (this.utxo_root != null) {
+                data.utxo_root = this.utxo_root.toObject();
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.parent_hash.length)
+                writer.writeRepeatedMessage(1, this.parent_hash, (item) => item.serialize(writer));
+            if (this.has_uncle_hash)
+                writer.writeMessage(2, this.uncle_hash, () => this.uncle_hash.serialize(writer));
+            if (this.has_coinbase)
+                writer.writeBytes(3, this.coinbase);
+            if (this.has_evm_root)
+                writer.writeMessage(4, this.evm_root, () => this.evm_root.serialize(writer));
+            if (this.has_tx_hash)
+                writer.writeMessage(5, this.tx_hash, () => this.tx_hash.serialize(writer));
+            if (this.has_etx_hash)
+                writer.writeMessage(6, this.etx_hash, () => this.etx_hash.serialize(writer));
+            if (this.has_etx_rollup_hash)
+                writer.writeMessage(7, this.etx_rollup_hash, () => this.etx_rollup_hash.serialize(writer));
+            if (this.manifest_hash.length)
+                writer.writeRepeatedMessage(8, this.manifest_hash, (item) => item.serialize(writer));
+            if (this.has_receipt_hash)
+                writer.writeMessage(9, this.receipt_hash, () => this.receipt_hash.serialize(writer));
+            if (this.has_difficulty)
+                writer.writeBytes(10, this.difficulty);
+            if (this.parent_entropy.length)
+                writer.writeRepeatedBytes(11, this.parent_entropy);
+            if (this.parent_delta_s.length)
+                writer.writeRepeatedBytes(12, this.parent_delta_s);
+            if (this.number.length)
+                writer.writeRepeatedBytes(13, this.number);
+            if (this.has_gas_limit)
+                writer.writeUint64(14, this.gas_limit);
+            if (this.has_gas_used)
+                writer.writeUint64(15, this.gas_used);
+            if (this.has_base_fee)
+                writer.writeBytes(16, this.base_fee);
+            if (this.has_location)
+                writer.writeMessage(17, this.location, () => this.location.serialize(writer));
+            if (this.has_time)
+                writer.writeUint64(18, this.time);
+            if (this.has_extra)
+                writer.writeBytes(19, this.extra);
+            if (this.has_mix_hash)
+                writer.writeMessage(20, this.mix_hash, () => this.mix_hash.serialize(writer));
+            if (this.has_nonce)
+                writer.writeUint64(21, this.nonce);
+            if (this.has_utxo_root)
+                writer.writeMessage(22, this.utxo_root, () => this.utxo_root.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoHeader();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.parent_hash, () => pb_1.Message.addToRepeatedWrapperField(message, 1, dependency_1.common.ProtoHash.deserialize(reader), dependency_1.common.ProtoHash));
+                        break;
+                    case 2:
+                        reader.readMessage(message.uncle_hash, () => message.uncle_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 3:
+                        message.coinbase = reader.readBytes();
+                        break;
+                    case 4:
+                        reader.readMessage(message.evm_root, () => message.evm_root = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 5:
+                        reader.readMessage(message.tx_hash, () => message.tx_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 6:
+                        reader.readMessage(message.etx_hash, () => message.etx_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 7:
+                        reader.readMessage(message.etx_rollup_hash, () => message.etx_rollup_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 8:
+                        reader.readMessage(message.manifest_hash, () => pb_1.Message.addToRepeatedWrapperField(message, 8, dependency_1.common.ProtoHash.deserialize(reader), dependency_1.common.ProtoHash));
+                        break;
+                    case 9:
+                        reader.readMessage(message.receipt_hash, () => message.receipt_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 10:
+                        message.difficulty = reader.readBytes();
+                        break;
+                    case 11:
+                        pb_1.Message.addToRepeatedField(message, 11, reader.readBytes());
+                        break;
+                    case 12:
+                        pb_1.Message.addToRepeatedField(message, 12, reader.readBytes());
+                        break;
+                    case 13:
+                        pb_1.Message.addToRepeatedField(message, 13, reader.readBytes());
+                        break;
+                    case 14:
+                        message.gas_limit = reader.readUint64();
+                        break;
+                    case 15:
+                        message.gas_used = reader.readUint64();
+                        break;
+                    case 16:
+                        message.base_fee = reader.readBytes();
+                        break;
+                    case 17:
+                        reader.readMessage(message.location, () => message.location = dependency_1.common.ProtoLocation.deserialize(reader));
+                        break;
+                    case 18:
+                        message.time = reader.readUint64();
+                        break;
+                    case 19:
+                        message.extra = reader.readBytes();
+                        break;
+                    case 20:
+                        reader.readMessage(message.mix_hash, () => message.mix_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 21:
+                        message.nonce = reader.readUint64();
+                        break;
+                    case 22:
+                        reader.readMessage(message.utxo_root, () => message.utxo_root = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoHeader.deserialize(bytes);
+        }
+    }
+    block.ProtoHeader = ProtoHeader;
+    class ProtoWorkObjectHeader extends pb_1.Message {
+        #one_of_decls = [[1], [2], [3], [4], [5], [6], [7]];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("header_hash" in data && data.header_hash != undefined) {
+                    this.header_hash = data.header_hash;
+                }
+                if ("parent_hash" in data && data.parent_hash != undefined) {
+                    this.parent_hash = data.parent_hash;
+                }
+                if ("number" in data && data.number != undefined) {
+                    this.number = data.number;
+                }
+                if ("difficulty" in data && data.difficulty != undefined) {
+                    this.difficulty = data.difficulty;
+                }
+                if ("tx_hash" in data && data.tx_hash != undefined) {
+                    this.tx_hash = data.tx_hash;
+                }
+                if ("nonce" in data && data.nonce != undefined) {
+                    this.nonce = data.nonce;
+                }
+                if ("location" in data && data.location != undefined) {
+                    this.location = data.location;
+                }
+            }
+        }
+        get header_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 1);
+        }
+        set header_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+        }
+        get has_header_hash() {
+            return pb_1.Message.getField(this, 1) != null;
+        }
+        get parent_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 2);
+        }
+        set parent_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+        }
+        get has_parent_hash() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+        get number() {
+            return pb_1.Message.getFieldWithDefault(this, 3, new Uint8Array(0));
+        }
+        set number(value) {
+            pb_1.Message.setOneofField(this, 3, this.#one_of_decls[2], value);
+        }
+        get has_number() {
+            return pb_1.Message.getField(this, 3) != null;
+        }
+        get difficulty() {
+            return pb_1.Message.getFieldWithDefault(this, 4, new Uint8Array(0));
+        }
+        set difficulty(value) {
+            pb_1.Message.setOneofField(this, 4, this.#one_of_decls[3], value);
+        }
+        get has_difficulty() {
+            return pb_1.Message.getField(this, 4) != null;
+        }
+        get tx_hash() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoHash, 5);
+        }
+        set tx_hash(value) {
+            pb_1.Message.setOneofWrapperField(this, 5, this.#one_of_decls[4], value);
+        }
+        get has_tx_hash() {
+            return pb_1.Message.getField(this, 5) != null;
+        }
+        get nonce() {
+            return pb_1.Message.getFieldWithDefault(this, 6, 0);
+        }
+        set nonce(value) {
+            pb_1.Message.setOneofField(this, 6, this.#one_of_decls[5], value);
+        }
+        get has_nonce() {
+            return pb_1.Message.getField(this, 6) != null;
+        }
+        get location() {
+            return pb_1.Message.getWrapperField(this, dependency_1.common.ProtoLocation, 7);
+        }
+        set location(value) {
+            pb_1.Message.setOneofWrapperField(this, 7, this.#one_of_decls[6], value);
+        }
+        get has_location() {
+            return pb_1.Message.getField(this, 7) != null;
+        }
+        get _header_hash() {
+            const cases = {
+                0: "none",
+                1: "header_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [1])];
+        }
+        get _parent_hash() {
+            const cases = {
+                0: "none",
+                2: "parent_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [2])];
+        }
+        get _number() {
+            const cases = {
+                0: "none",
+                3: "number"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [3])];
+        }
+        get _difficulty() {
+            const cases = {
+                0: "none",
+                4: "difficulty"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [4])];
+        }
+        get _tx_hash() {
+            const cases = {
+                0: "none",
+                5: "tx_hash"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [5])];
+        }
+        get _nonce() {
+            const cases = {
+                0: "none",
+                6: "nonce"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [6])];
+        }
+        get _location() {
+            const cases = {
+                0: "none",
+                7: "location"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [7])];
+        }
+        static fromObject(data) {
+            const message = new ProtoWorkObjectHeader({});
+            if (data.header_hash != null) {
+                message.header_hash = dependency_1.common.ProtoHash.fromObject(data.header_hash);
+            }
+            if (data.parent_hash != null) {
+                message.parent_hash = dependency_1.common.ProtoHash.fromObject(data.parent_hash);
+            }
+            if (data.number != null) {
+                message.number = data.number;
+            }
+            if (data.difficulty != null) {
+                message.difficulty = data.difficulty;
+            }
+            if (data.tx_hash != null) {
+                message.tx_hash = dependency_1.common.ProtoHash.fromObject(data.tx_hash);
+            }
+            if (data.nonce != null) {
+                message.nonce = data.nonce;
+            }
+            if (data.location != null) {
+                message.location = dependency_1.common.ProtoLocation.fromObject(data.location);
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.header_hash != null) {
+                data.header_hash = this.header_hash.toObject();
+            }
+            if (this.parent_hash != null) {
+                data.parent_hash = this.parent_hash.toObject();
+            }
+            if (this.number != null) {
+                data.number = this.number;
+            }
+            if (this.difficulty != null) {
+                data.difficulty = this.difficulty;
+            }
+            if (this.tx_hash != null) {
+                data.tx_hash = this.tx_hash.toObject();
+            }
+            if (this.nonce != null) {
+                data.nonce = this.nonce;
+            }
+            if (this.location != null) {
+                data.location = this.location.toObject();
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.has_header_hash)
+                writer.writeMessage(1, this.header_hash, () => this.header_hash.serialize(writer));
+            if (this.has_parent_hash)
+                writer.writeMessage(2, this.parent_hash, () => this.parent_hash.serialize(writer));
+            if (this.has_number)
+                writer.writeBytes(3, this.number);
+            if (this.has_difficulty)
+                writer.writeBytes(4, this.difficulty);
+            if (this.has_tx_hash)
+                writer.writeMessage(5, this.tx_hash, () => this.tx_hash.serialize(writer));
+            if (this.has_nonce)
+                writer.writeUint64(6, this.nonce);
+            if (this.has_location)
+                writer.writeMessage(7, this.location, () => this.location.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoWorkObjectHeader();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.header_hash, () => message.header_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 2:
+                        reader.readMessage(message.parent_hash, () => message.parent_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 3:
+                        message.number = reader.readBytes();
+                        break;
+                    case 4:
+                        message.difficulty = reader.readBytes();
+                        break;
+                    case 5:
+                        reader.readMessage(message.tx_hash, () => message.tx_hash = dependency_1.common.ProtoHash.deserialize(reader));
+                        break;
+                    case 6:
+                        message.nonce = reader.readUint64();
+                        break;
+                    case 7:
+                        reader.readMessage(message.location, () => message.location = dependency_1.common.ProtoLocation.deserialize(reader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoWorkObjectHeader.deserialize(bytes);
+        }
+    }
+    block.ProtoWorkObjectHeader = ProtoWorkObjectHeader;
+    class ProtoWorkObjectBody extends pb_1.Message {
+        #one_of_decls = [[1], [2], [3], [4], [5]];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("header" in data && data.header != undefined) {
+                    this.header = data.header;
+                }
+                if ("transactions" in data && data.transactions != undefined) {
+                    this.transactions = data.transactions;
+                }
+                if ("ext_transactions" in data && data.ext_transactions != undefined) {
+                    this.ext_transactions = data.ext_transactions;
+                }
+                if ("uncles" in data && data.uncles != undefined) {
+                    this.uncles = data.uncles;
+                }
+                if ("manifest" in data && data.manifest != undefined) {
+                    this.manifest = data.manifest;
+                }
+            }
+        }
+        get header() {
+            return pb_1.Message.getWrapperField(this, ProtoHeader, 1);
+        }
+        set header(value) {
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+        }
+        get has_header() {
+            return pb_1.Message.getField(this, 1) != null;
+        }
+        get transactions() {
+            return pb_1.Message.getWrapperField(this, ProtoTransactions, 2);
+        }
+        set transactions(value) {
+            pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+        }
+        get has_transactions() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+        get ext_transactions() {
+            return pb_1.Message.getWrapperField(this, ProtoTransactions, 3);
+        }
+        set ext_transactions(value) {
+            pb_1.Message.setOneofWrapperField(this, 3, this.#one_of_decls[2], value);
+        }
+        get has_ext_transactions() {
+            return pb_1.Message.getField(this, 3) != null;
+        }
+        get uncles() {
+            return pb_1.Message.getWrapperField(this, ProtoWorkObjects, 4);
+        }
+        set uncles(value) {
+            pb_1.Message.setOneofWrapperField(this, 4, this.#one_of_decls[3], value);
+        }
+        get has_uncles() {
+            return pb_1.Message.getField(this, 4) != null;
+        }
+        get manifest() {
+            return pb_1.Message.getWrapperField(this, ProtoManifest, 5);
+        }
+        set manifest(value) {
+            pb_1.Message.setOneofWrapperField(this, 5, this.#one_of_decls[4], value);
+        }
+        get has_manifest() {
+            return pb_1.Message.getField(this, 5) != null;
+        }
+        get _header() {
+            const cases = {
+                0: "none",
+                1: "header"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [1])];
+        }
+        get _transactions() {
+            const cases = {
+                0: "none",
+                2: "transactions"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [2])];
+        }
+        get _ext_transactions() {
+            const cases = {
+                0: "none",
+                3: "ext_transactions"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [3])];
+        }
+        get _uncles() {
+            const cases = {
+                0: "none",
+                4: "uncles"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [4])];
+        }
+        get _manifest() {
+            const cases = {
+                0: "none",
+                5: "manifest"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [5])];
+        }
+        static fromObject(data) {
+            const message = new ProtoWorkObjectBody({});
+            if (data.header != null) {
+                message.header = ProtoHeader.fromObject(data.header);
+            }
+            if (data.transactions != null) {
+                message.transactions = ProtoTransactions.fromObject(data.transactions);
+            }
+            if (data.ext_transactions != null) {
+                message.ext_transactions = ProtoTransactions.fromObject(data.ext_transactions);
+            }
+            if (data.uncles != null) {
+                message.uncles = ProtoWorkObjects.fromObject(data.uncles);
+            }
+            if (data.manifest != null) {
+                message.manifest = ProtoManifest.fromObject(data.manifest);
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.header != null) {
+                data.header = this.header.toObject();
+            }
+            if (this.transactions != null) {
+                data.transactions = this.transactions.toObject();
+            }
+            if (this.ext_transactions != null) {
+                data.ext_transactions = this.ext_transactions.toObject();
+            }
+            if (this.uncles != null) {
+                data.uncles = this.uncles.toObject();
+            }
+            if (this.manifest != null) {
+                data.manifest = this.manifest.toObject();
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.has_header)
+                writer.writeMessage(1, this.header, () => this.header.serialize(writer));
+            if (this.has_transactions)
+                writer.writeMessage(2, this.transactions, () => this.transactions.serialize(writer));
+            if (this.has_ext_transactions)
+                writer.writeMessage(3, this.ext_transactions, () => this.ext_transactions.serialize(writer));
+            if (this.has_uncles)
+                writer.writeMessage(4, this.uncles, () => this.uncles.serialize(writer));
+            if (this.has_manifest)
+                writer.writeMessage(5, this.manifest, () => this.manifest.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoWorkObjectBody();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.header, () => message.header = ProtoHeader.deserialize(reader));
+                        break;
+                    case 2:
+                        reader.readMessage(message.transactions, () => message.transactions = ProtoTransactions.deserialize(reader));
+                        break;
+                    case 3:
+                        reader.readMessage(message.ext_transactions, () => message.ext_transactions = ProtoTransactions.deserialize(reader));
+                        break;
+                    case 4:
+                        reader.readMessage(message.uncles, () => message.uncles = ProtoWorkObjects.deserialize(reader));
+                        break;
+                    case 5:
+                        reader.readMessage(message.manifest, () => message.manifest = ProtoManifest.deserialize(reader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoWorkObjectBody.deserialize(bytes);
+        }
+    }
+    block.ProtoWorkObjectBody = ProtoWorkObjectBody;
+    class ProtoWorkObject extends pb_1.Message {
+        #one_of_decls = [[1], [2], [3]];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("wo_header" in data && data.wo_header != undefined) {
+                    this.wo_header = data.wo_header;
+                }
+                if ("wo_body" in data && data.wo_body != undefined) {
+                    this.wo_body = data.wo_body;
+                }
+                if ("tx" in data && data.tx != undefined) {
+                    this.tx = data.tx;
+                }
+            }
+        }
+        get wo_header() {
+            return pb_1.Message.getWrapperField(this, ProtoWorkObjectHeader, 1);
+        }
+        set wo_header(value) {
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+        }
+        get has_wo_header() {
+            return pb_1.Message.getField(this, 1) != null;
+        }
+        get wo_body() {
+            return pb_1.Message.getWrapperField(this, ProtoWorkObjectBody, 2);
+        }
+        set wo_body(value) {
+            pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+        }
+        get has_wo_body() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+        get tx() {
+            return pb_1.Message.getWrapperField(this, ProtoTransaction, 3);
+        }
+        set tx(value) {
+            pb_1.Message.setOneofWrapperField(this, 3, this.#one_of_decls[2], value);
+        }
+        get has_tx() {
+            return pb_1.Message.getField(this, 3) != null;
+        }
+        get _wo_header() {
+            const cases = {
+                0: "none",
+                1: "wo_header"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [1])];
+        }
+        get _wo_body() {
+            const cases = {
+                0: "none",
+                2: "wo_body"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [2])];
+        }
+        get _tx() {
+            const cases = {
+                0: "none",
+                3: "tx"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [3])];
+        }
+        static fromObject(data) {
+            const message = new ProtoWorkObject({});
+            if (data.wo_header != null) {
+                message.wo_header = ProtoWorkObjectHeader.fromObject(data.wo_header);
+            }
+            if (data.wo_body != null) {
+                message.wo_body = ProtoWorkObjectBody.fromObject(data.wo_body);
+            }
+            if (data.tx != null) {
+                message.tx = ProtoTransaction.fromObject(data.tx);
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.wo_header != null) {
+                data.wo_header = this.wo_header.toObject();
+            }
+            if (this.wo_body != null) {
+                data.wo_body = this.wo_body.toObject();
+            }
+            if (this.tx != null) {
+                data.tx = this.tx.toObject();
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.has_wo_header)
+                writer.writeMessage(1, this.wo_header, () => this.wo_header.serialize(writer));
+            if (this.has_wo_body)
+                writer.writeMessage(2, this.wo_body, () => this.wo_body.serialize(writer));
+            if (this.has_tx)
+                writer.writeMessage(3, this.tx, () => this.tx.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoWorkObject();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.wo_header, () => message.wo_header = ProtoWorkObjectHeader.deserialize(reader));
+                        break;
+                    case 2:
+                        reader.readMessage(message.wo_body, () => message.wo_body = ProtoWorkObjectBody.deserialize(reader));
+                        break;
+                    case 3:
+                        reader.readMessage(message.tx, () => message.tx = ProtoTransaction.deserialize(reader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoWorkObject.deserialize(bytes);
+        }
+    }
+    block.ProtoWorkObject = ProtoWorkObject;
+    class ProtoWorkObjects extends pb_1.Message {
+        #one_of_decls = [];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("work_objects" in data && data.work_objects != undefined) {
+                    this.work_objects = data.work_objects;
+                }
+            }
+        }
+        get work_objects() {
+            return pb_1.Message.getRepeatedWrapperField(this, ProtoWorkObject, 1);
+        }
+        set work_objects(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+        }
+        static fromObject(data) {
+            const message = new ProtoWorkObjects({});
+            if (data.work_objects != null) {
+                message.work_objects = data.work_objects.map(item => ProtoWorkObject.fromObject(item));
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.work_objects != null) {
+                data.work_objects = this.work_objects.map((item) => item.toObject());
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.work_objects.length)
+                writer.writeRepeatedMessage(1, this.work_objects, (item) => item.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoWorkObjects();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.work_objects, () => pb_1.Message.addToRepeatedWrapperField(message, 1, ProtoWorkObject.deserialize(reader), ProtoWorkObject));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoWorkObjects.deserialize(bytes);
+        }
+    }
+    block.ProtoWorkObjects = ProtoWorkObjects;
+    class ProtoPendingHeader extends pb_1.Message {
+        #one_of_decls = [[1], [2]];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("wo" in data && data.wo != undefined) {
+                    this.wo = data.wo;
+                }
+                if ("termini" in data && data.termini != undefined) {
+                    this.termini = data.termini;
+                }
+            }
+        }
+        get wo() {
+            return pb_1.Message.getWrapperField(this, ProtoWorkObject, 1);
+        }
+        set wo(value) {
+            pb_1.Message.setOneofWrapperField(this, 1, this.#one_of_decls[0], value);
+        }
+        get has_wo() {
+            return pb_1.Message.getField(this, 1) != null;
+        }
+        get termini() {
+            return pb_1.Message.getWrapperField(this, ProtoTermini, 2);
+        }
+        set termini(value) {
+            pb_1.Message.setOneofWrapperField(this, 2, this.#one_of_decls[1], value);
+        }
+        get has_termini() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+        get _wo() {
+            const cases = {
+                0: "none",
+                1: "wo"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [1])];
+        }
+        get _termini() {
+            const cases = {
+                0: "none",
+                2: "termini"
+            };
+            return cases[pb_1.Message.computeOneofCase(this, [2])];
+        }
+        static fromObject(data) {
+            const message = new ProtoPendingHeader({});
+            if (data.wo != null) {
+                message.wo = ProtoWorkObject.fromObject(data.wo);
+            }
+            if (data.termini != null) {
+                message.termini = ProtoTermini.fromObject(data.termini);
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.wo != null) {
+                data.wo = this.wo.toObject();
+            }
+            if (this.termini != null) {
+                data.termini = this.termini.toObject();
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.has_wo)
+                writer.writeMessage(1, this.wo, () => this.wo.serialize(writer));
+            if (this.has_termini)
+                writer.writeMessage(2, this.termini, () => this.termini.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoPendingHeader();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.wo, () => message.wo = ProtoWorkObject.deserialize(reader));
+                        break;
+                    case 2:
+                        reader.readMessage(message.termini, () => message.termini = ProtoTermini.deserialize(reader));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoPendingHeader.deserialize(bytes);
+        }
+    }
+    block.ProtoPendingHeader = ProtoPendingHeader;
+    class ProtoTermini extends pb_1.Message {
+        #one_of_decls = [];
+        constructor(data) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1, 2], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("dom_termini" in data && data.dom_termini != undefined) {
+                    this.dom_termini = data.dom_termini;
+                }
+                if ("sub_termini" in data && data.sub_termini != undefined) {
+                    this.sub_termini = data.sub_termini;
+                }
+            }
+        }
+        get dom_termini() {
+            return pb_1.Message.getRepeatedWrapperField(this, dependency_1.common.ProtoHash, 1);
+        }
+        set dom_termini(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+        }
+        get sub_termini() {
+            return pb_1.Message.getRepeatedWrapperField(this, dependency_1.common.ProtoHash, 2);
+        }
+        set sub_termini(value) {
+            pb_1.Message.setRepeatedWrapperField(this, 2, value);
+        }
+        static fromObject(data) {
+            const message = new ProtoTermini({});
+            if (data.dom_termini != null) {
+                message.dom_termini = data.dom_termini.map(item => dependency_1.common.ProtoHash.fromObject(item));
+            }
+            if (data.sub_termini != null) {
+                message.sub_termini = data.sub_termini.map(item => dependency_1.common.ProtoHash.fromObject(item));
+            }
+            return message;
+        }
+        toObject() {
+            const data = {};
+            if (this.dom_termini != null) {
+                data.dom_termini = this.dom_termini.map((item) => item.toObject());
+            }
+            if (this.sub_termini != null) {
+                data.sub_termini = this.sub_termini.map((item) => item.toObject());
+            }
+            return data;
+        }
+        serialize(w) {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.dom_termini.length)
+                writer.writeRepeatedMessage(1, this.dom_termini, (item) => item.serialize(writer));
+            if (this.sub_termini.length)
+                writer.writeRepeatedMessage(2, this.sub_termini, (item) => item.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+        static deserialize(bytes) {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new ProtoTermini();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.dom_termini, () => pb_1.Message.addToRepeatedWrapperField(message, 1, dependency_1.common.ProtoHash.deserialize(reader), dependency_1.common.ProtoHash));
+                        break;
+                    case 2:
+                        reader.readMessage(message.sub_termini, () => pb_1.Message.addToRepeatedWrapperField(message, 2, dependency_1.common.ProtoHash.deserialize(reader), dependency_1.common.ProtoHash));
+                        break;
+                    default: reader.skipField();
+                }
+            }
+            return message;
+        }
+        serializeBinary() {
+            return this.serialize();
+        }
+        static deserializeBinary(bytes) {
+            return ProtoTermini.deserialize(bytes);
+        }
+    }
+    block.ProtoTermini = ProtoTermini;
 })(block || (block = {}));
 //# sourceMappingURL=proto-block.js.map

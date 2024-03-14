@@ -1,21 +1,12 @@
 import { getAddress } from "../address/index.js";
 import { keccak256, Signature, SigningKey } from "../crypto/index.js";
-import { getBytes, getBigInt, getNumber, hexlify, assert, assertArgument, toBeArray, zeroPadValue, encodeProto, decodeProto, toBigInt } from "../utils/index.js";
+import { getBytes, getBigInt, getNumber, hexlify, assert, assertArgument, toBeArray, zeroPadValue, toBigInt } from "../utils/index.js";
 import { accessListify } from "./accesslist.js";
 import { recoverAddress } from "./address.js";
-function handleNumber(_value, param) {
-    if (_value === "0x") {
-        return 0;
-    }
-    return getNumber(_value, param);
-}
-function formatNumber(_value, name) {
-    const value = getBigInt(_value, "value");
-    const result = toBeArray(value);
-    assertArgument(result.length <= 32, `value too large`, `tx.${name}`, value);
-    return result;
-}
-function _parseSignature(tx, fields, serialize) {
+import { encodeProtoTransaction } from "../utils/proto-encode.js";
+import { decodeProtoTransaction } from "../utils/proto-decode.js";
+import { handleNumber, formatNumber } from "../providers/format.js";
+function _parseSignature(tx, fields) {
     let yParity;
     try {
         yParity = handleNumber(fields[0], "yParity");
@@ -32,7 +23,7 @@ function _parseSignature(tx, fields, serialize) {
     tx.signature = signature;
 }
 function _parse(data) {
-    const decodedTx = decodeProto(getBytes(data));
+    const decodedTx = decodeProtoTransaction(getBytes(data));
     const tx = {
         type: decodedTx.type,
         chainId: toBigInt(decodedTx.chain_id),
@@ -58,35 +49,8 @@ function _parse(data) {
         hexlify(decodedTx.r),
         hexlify(decodedTx.s),
     ];
-    _parseSignature(tx, signatureFields, _serialize);
+    _parseSignature(tx, signatureFields);
     return tx;
-}
-function _serialize(tx, sig) {
-    const formattedTx = {
-        chain_id: formatNumber(tx.chainId || 0, "chainId"),
-        nonce: (tx.nonce || 0),
-        gas_tip_cap: formatNumber(tx.maxPriorityFeePerGas || 0, "maxPriorityFeePerGas"),
-        gas_fee_cap: formatNumber(tx.maxFeePerGas || 0, "maxFeePerGas"),
-        gas: Number(tx.gasLimit || 0),
-        to: tx.to != null ? getBytes(tx.to) : "0x",
-        value: formatNumber(tx.value || 0, "value"),
-        data: getBytes(tx.data || "0x"),
-        access_list: { access_tuples: tx.accessList || [] },
-        type: (tx.type || 0),
-    };
-    if (tx.type == 2) {
-        formattedTx.etx_gas_limit = Number(tx.externalGasLimit || 0);
-        formattedTx.etx_gas_price = formatNumber(tx.externalGasPrice || 0, "externalGasPrice");
-        formattedTx.etx_gas_tip = formatNumber(tx.externalGasTip || 0, "externalGasTip");
-        formattedTx.etx_data = getBytes(tx.externalData || "0x");
-        formattedTx.etx_access_list = { access_tuples: tx.externalAccessList || [] };
-    }
-    if (sig) {
-        formattedTx.v = formatNumber(sig.yParity, "yParity"),
-            formattedTx.r = toBeArray(sig.r),
-            formattedTx.s = toBeArray(sig.s);
-    }
-    return encodeProto(formattedTx);
 }
 /**
  *  A **Transaction** describes an operation to be executed on
@@ -388,7 +352,7 @@ export class Transaction {
      */
     get serialized() {
         assert(this.signature != null, "cannot serialize unsigned transaction; maybe you meant .unsignedSerialized", "UNSUPPORTED_OPERATION", { operation: ".serialized" });
-        return _serialize(this, this.signature);
+        return this.#serialize();
     }
     /**
      *  The transaction pre-image.
@@ -397,7 +361,7 @@ export class Transaction {
      *  authorize this transaction.
      */
     get unsignedSerialized() {
-        return _serialize(this);
+        return this.#serialize();
     }
     /**
      *  Return the most "likely" type; currently the highest
@@ -461,7 +425,7 @@ export class Transaction {
         return {
             type: this.type,
             to: this.to,
-            //            from: this.from,
+            // from: this.from,
             data: this.data,
             nonce: this.nonce,
             gasLimit: s(this.gasLimit),
@@ -470,7 +434,8 @@ export class Transaction {
             maxFeePerGas: s(this.maxFeePerGas),
             value: s(this.value),
             chainId: s(this.chainId),
-            sig: this.signature ? this.signature.toJSON() : null,
+            signature: this.signature ? this.signature.toJSON() : null,
+            hash: this.hash,
             accessList: this.accessList,
             externalGasLimit: s(this.externalGasLimit),
             externalGasTip: s(this.externalGasTip),
@@ -478,6 +443,38 @@ export class Transaction {
             externalData: this.externalData,
             externalAccessList: this.externalAccessList,
         };
+    }
+    /**
+     *  Return a protobuf-friendly JSON object.
+     */
+    toProtobuf() {
+        const protoTx = {
+            type: (this.type || 0),
+            chain_id: formatNumber(this.chainId || 0, "chainId"),
+            nonce: (this.nonce || 0),
+            gas_tip_cap: formatNumber(this.maxPriorityFeePerGas || 0, "maxPriorityFeePerGas"),
+            gas_fee_cap: formatNumber(this.maxFeePerGas || 0, "maxFeePerGas"),
+            gas: Number(this.gasLimit || 0),
+            to: this.to != null ? getBytes(this.to) : new Uint8Array(0),
+            value: formatNumber(this.value || 0, "value"),
+            data: getBytes(this.data || "0x"),
+            access_list: { access_tuples: [] },
+        };
+        if (this.type == 2) {
+            protoTx.etx_gas_limit = Number(this.externalGasLimit || 0);
+            protoTx.etx_gas_price = formatNumber(this.externalGasPrice || 0, "externalGasPrice");
+            protoTx.etx_gas_tip = formatNumber(this.externalGasTip || 0, "externalGasTip");
+            protoTx.etx_data = getBytes(this.externalData || "0x");
+            protoTx.etx_access_list = { access_tuples: [] };
+        }
+        if (this.signature) {
+            protoTx.v = formatNumber(this.signature.yParity, "yParity"),
+                protoTx.r = toBeArray(this.signature.r),
+                protoTx.s = toBeArray(this.signature.s);
+            protoTx.signature = getBytes(this.signature.serialized);
+        }
+        console.log("formatted tx ", protoTx);
+        return protoTx;
     }
     /**
      *  Create a **Transaction** from a serialized transaction or a
@@ -549,6 +546,14 @@ export class Transaction {
             assertArgument(result.from.toLowerCase() === (tx.from || "").toLowerCase(), "from mismatch", "tx", tx);
         }
         return result;
+    }
+    /**
+     *  Serializes the WorkObject to a string.
+     *
+     *  @returns The serialized string representation of the WorkObject.
+     */
+    #serialize() {
+        return encodeProtoTransaction(this.toProtobuf());
     }
 }
 //# sourceMappingURL=transaction.js.map

@@ -1,8 +1,10 @@
 import { getAddress, resolveAddress } from "../address/index.js";
 import { hashMessage, TypedDataEncoder } from "../hash/index.js";
 import { AbstractSigner } from "../providers/index.js";
-import { computeAddress, Transaction } from "../transaction/index.js";
+import { computeAddress } from "../transaction/index.js";
+// import { computeAddress, Transaction } from "../transaction/index.js";
 import { resolveProperties, assert, assertArgument } from "../utils/index.js";
+import { WorkObject } from "../transaction/work-object.js";
 /**
  *  The **BaseWallet** is a stream-lined implementation of a
  *  [[Signer]] that operates with a private key.
@@ -67,10 +69,16 @@ export class BaseWallet extends AbstractSigner {
             assertArgument(getAddress((tx.from)) === this.#address, "transaction from address mismatch", "tx.from", tx.from);
             delete tx.from;
         }
-        // Build the transaction
-        const btx = Transaction.from(tx);
-        btx.signature = this.signingKey.sign(btx.unsignedHash);
-        return btx.serialized;
+        const wo = await this.provider?.getPendingHeader();
+        if (!wo) {
+            throw new Error("No pending header found");
+        }
+        // Sign the work object header hash
+        const sig = this.signingKey.sign(wo.woHeader.woheaderHash);
+        // Build the work object
+        const bwo = new WorkObject(wo.woHeader, wo.woBody, tx, sig);
+        const serializedWorkObject = bwo.serialized;
+        return serializedWorkObject;
     }
     async signMessage(message) {
         return this.signMessageSync(message);

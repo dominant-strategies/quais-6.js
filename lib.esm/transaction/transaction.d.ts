@@ -80,6 +80,37 @@ export interface TransactionLike<A = string> {
      */
     externalAccessList?: null | AccessListish;
 }
+export interface ProtoTransaction {
+    type: number;
+    to: Uint8Array;
+    nonce: number;
+    value: Uint8Array;
+    gas: number;
+    data: Uint8Array;
+    chain_id: Uint8Array;
+    gas_fee_cap: Uint8Array;
+    gas_tip_cap: Uint8Array;
+    access_list: ProtoAccessList;
+    etx_gas_limit?: number;
+    etx_gas_price?: Uint8Array;
+    etx_gas_tip?: Uint8Array;
+    etx_data?: Uint8Array;
+    etx_access_list?: ProtoAccessList;
+    v?: Uint8Array;
+    r?: Uint8Array;
+    s?: Uint8Array;
+    originating_tx_hash?: string;
+    etx_index?: number;
+    etx_sender?: Uint8Array;
+    signature?: Uint8Array;
+}
+export interface ProtoAccessList {
+    access_tuples: Array<ProtoAccessTuple>;
+}
+export interface ProtoAccessTuple {
+    address: Uint8Array;
+    storage_key: Array<Uint8Array>;
+}
 /**
  *  A **Transaction** describes an operation to be executed on
  *  Ethereum by an Externally Owned Account (EOA). It includes
@@ -269,7 +300,11 @@ export declare class Transaction implements TransactionLike<string> {
     /**
      *  Return a JSON-friendly object.
      */
-    toJSON(): any;
+    toJSON(): TransactionLike;
+    /**
+     *  Return a protobuf-friendly JSON object.
+     */
+    toProtobuf(): ProtoTransaction;
     /**
      *  Create a **Transaction** from a serialized transaction or a
      *  Transaction-like object.

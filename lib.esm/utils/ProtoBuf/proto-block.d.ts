@@ -7,7 +7,7 @@ import * as dependency_1 from "./proto_common";
 import * as pb_1 from "google-protobuf";
 export declare namespace block {
     class ProtoTransaction extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | ({} & (({
             type?: number;
         }) | ({
@@ -242,8 +242,168 @@ export declare namespace block {
         serializeBinary(): Uint8Array;
         static deserializeBinary(bytes: Uint8Array): ProtoTransaction;
     }
+    class ProtoTransactions extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | {
+            transactions?: ProtoTransaction[];
+        });
+        get transactions(): ProtoTransaction[];
+        set transactions(value: ProtoTransaction[]);
+        static fromObject(data: {
+            transactions?: ReturnType<typeof ProtoTransaction.prototype.toObject>[];
+        }): ProtoTransactions;
+        toObject(): {
+            transactions?: {
+                type?: number | undefined;
+                to?: Uint8Array | undefined;
+                nonce?: number | undefined;
+                value?: Uint8Array | undefined;
+                gas?: number | undefined;
+                data?: Uint8Array | undefined;
+                chain_id?: Uint8Array | undefined;
+                gas_fee_cap?: Uint8Array | undefined;
+                gas_tip_cap?: Uint8Array | undefined;
+                access_list?: {
+                    access_tuples?: {
+                        address?: Uint8Array | undefined;
+                        storage_key?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                    }[] | undefined;
+                } | undefined;
+                etx_gas_limit?: number | undefined;
+                etx_gas_price?: Uint8Array | undefined;
+                etx_gas_tip?: Uint8Array | undefined;
+                etx_data?: Uint8Array | undefined;
+                etx_access_list?: {
+                    access_tuples?: {
+                        address?: Uint8Array | undefined;
+                        storage_key?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                    }[] | undefined;
+                } | undefined;
+                v?: Uint8Array | undefined;
+                r?: Uint8Array | undefined;
+                s?: Uint8Array | undefined;
+                originating_tx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_index?: number | undefined;
+                etx_sender?: Uint8Array | undefined;
+                tx_ins?: {
+                    tx_ins?: {
+                        previous_out_point?: {
+                            hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            index?: number | undefined;
+                        } | undefined;
+                        pub_key?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                tx_outs?: {
+                    tx_outs?: {
+                        denomination?: number | undefined;
+                        address?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                signature?: Uint8Array | undefined;
+            }[] | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoTransactions;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoTransactions;
+    }
+    class ProtoHeaders extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | {
+            headers?: ProtoHeader[];
+        });
+        get headers(): ProtoHeader[];
+        set headers(value: ProtoHeader[]);
+        static fromObject(data: {
+            headers?: ReturnType<typeof ProtoHeader.prototype.toObject>[];
+        }): ProtoHeaders;
+        toObject(): {
+            headers?: {
+                parent_hash?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+                uncle_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                coinbase?: Uint8Array | undefined;
+                evm_root?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                tx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_rollup_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                manifest_hash?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+                receipt_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                difficulty?: Uint8Array | undefined;
+                parent_entropy?: Uint8Array[] | undefined;
+                parent_delta_s?: Uint8Array[] | undefined;
+                number?: Uint8Array[] | undefined;
+                gas_limit?: number | undefined;
+                gas_used?: number | undefined;
+                base_fee?: Uint8Array | undefined;
+                location?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                time?: number | undefined;
+                extra?: Uint8Array | undefined;
+                mix_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                nonce?: number | undefined;
+                utxo_root?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+            }[] | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoHeaders;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoHeaders;
+    }
+    class ProtoManifest extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | {
+            manifest?: dependency_1.common.ProtoHash[];
+        });
+        get manifest(): dependency_1.common.ProtoHash[];
+        set manifest(value: dependency_1.common.ProtoHash[]);
+        static fromObject(data: {
+            manifest?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>[];
+        }): ProtoManifest;
+        toObject(): {
+            manifest?: {
+                value?: Uint8Array | undefined;
+            }[] | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoManifest;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoManifest;
+    }
     class ProtoAccessList extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | {
             access_tuples?: ProtoAccessTuple[];
         });
@@ -267,7 +427,7 @@ export declare namespace block {
         static deserializeBinary(bytes: Uint8Array): ProtoAccessList;
     }
     class ProtoTxIns extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | {
             tx_ins?: ProtoTxIn[];
         });
@@ -294,7 +454,7 @@ export declare namespace block {
         static deserializeBinary(bytes: Uint8Array): ProtoTxIns;
     }
     class ProtoTxOuts extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | {
             tx_outs?: ProtoTxOut[];
         });
@@ -316,7 +476,7 @@ export declare namespace block {
         static deserializeBinary(bytes: Uint8Array): ProtoTxOuts;
     }
     class ProtoTxIn extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | ({} & (({
             previous_out_point?: ProtoOutPoint;
         }) | ({
@@ -350,7 +510,7 @@ export declare namespace block {
         static deserializeBinary(bytes: Uint8Array): ProtoTxIn;
     }
     class ProtoOutPoint extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | ({} & (({
             hash?: dependency_1.common.ProtoHash;
         }) | ({
@@ -381,7 +541,7 @@ export declare namespace block {
         static deserializeBinary(bytes: Uint8Array): ProtoOutPoint;
     }
     class ProtoTxOut extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | ({} & (({
             denomination?: number;
         }) | ({
@@ -410,7 +570,7 @@ export declare namespace block {
         static deserializeBinary(bytes: Uint8Array): ProtoTxOut;
     }
     class ProtoAccessTuple extends pb_1.Message {
-        one_of_decls: number[][];
+        #private;
         constructor(data?: any[] | {
             address?: Uint8Array;
             storage_key?: dependency_1.common.ProtoHash[];
@@ -434,6 +594,2144 @@ export declare namespace block {
         static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoAccessTuple;
         serializeBinary(): Uint8Array;
         static deserializeBinary(bytes: Uint8Array): ProtoAccessTuple;
+    }
+    class ProtoBlock extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | ({} & (({
+            header?: ProtoHeader;
+        }) | ({
+            body?: ProtoBody;
+        }))));
+        get header(): ProtoHeader;
+        set header(value: ProtoHeader);
+        get has_header(): boolean;
+        get body(): ProtoBody;
+        set body(value: ProtoBody);
+        get has_body(): boolean;
+        get _header(): "none" | "header";
+        get _body(): "none" | "body";
+        static fromObject(data: {
+            header?: ReturnType<typeof ProtoHeader.prototype.toObject>;
+            body?: ReturnType<typeof ProtoBody.prototype.toObject>;
+        }): ProtoBlock;
+        toObject(): {
+            header?: {
+                parent_hash?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+                uncle_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                coinbase?: Uint8Array | undefined;
+                evm_root?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                tx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_rollup_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                manifest_hash?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+                receipt_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                difficulty?: Uint8Array | undefined;
+                parent_entropy?: Uint8Array[] | undefined;
+                parent_delta_s?: Uint8Array[] | undefined;
+                number?: Uint8Array[] | undefined;
+                gas_limit?: number | undefined;
+                gas_used?: number | undefined;
+                base_fee?: Uint8Array | undefined;
+                location?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                time?: number | undefined;
+                extra?: Uint8Array | undefined;
+                mix_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                nonce?: number | undefined;
+                utxo_root?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+            } | undefined;
+            body?: {
+                txs?: {
+                    transactions?: {
+                        type?: number | undefined;
+                        to?: Uint8Array | undefined;
+                        nonce?: number | undefined;
+                        value?: Uint8Array | undefined;
+                        gas?: number | undefined;
+                        data?: Uint8Array | undefined;
+                        chain_id?: Uint8Array | undefined;
+                        gas_fee_cap?: Uint8Array | undefined;
+                        gas_tip_cap?: Uint8Array | undefined;
+                        access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        etx_gas_limit?: number | undefined;
+                        etx_gas_price?: Uint8Array | undefined;
+                        etx_gas_tip?: Uint8Array | undefined;
+                        etx_data?: Uint8Array | undefined;
+                        etx_access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        v?: Uint8Array | undefined;
+                        r?: Uint8Array | undefined;
+                        s?: Uint8Array | undefined;
+                        originating_tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_index?: number | undefined;
+                        etx_sender?: Uint8Array | undefined;
+                        tx_ins?: {
+                            tx_ins?: {
+                                previous_out_point?: {
+                                    hash?: {
+                                        value?: Uint8Array | undefined;
+                                    } | undefined;
+                                    index?: number | undefined;
+                                } | undefined;
+                                pub_key?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        tx_outs?: {
+                            tx_outs?: {
+                                denomination?: number | undefined;
+                                address?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        signature?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                uncles?: {
+                    headers?: {
+                        parent_hash?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                        uncle_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        coinbase?: Uint8Array | undefined;
+                        evm_root?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_rollup_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        manifest_hash?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                        receipt_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        difficulty?: Uint8Array | undefined;
+                        parent_entropy?: Uint8Array[] | undefined;
+                        parent_delta_s?: Uint8Array[] | undefined;
+                        number?: Uint8Array[] | undefined;
+                        gas_limit?: number | undefined;
+                        gas_used?: number | undefined;
+                        base_fee?: Uint8Array | undefined;
+                        location?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        time?: number | undefined;
+                        extra?: Uint8Array | undefined;
+                        mix_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        nonce?: number | undefined;
+                        utxo_root?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                    }[] | undefined;
+                } | undefined;
+                etxs?: {
+                    transactions?: {
+                        type?: number | undefined;
+                        to?: Uint8Array | undefined;
+                        nonce?: number | undefined;
+                        value?: Uint8Array | undefined;
+                        gas?: number | undefined;
+                        data?: Uint8Array | undefined;
+                        chain_id?: Uint8Array | undefined;
+                        gas_fee_cap?: Uint8Array | undefined;
+                        gas_tip_cap?: Uint8Array | undefined;
+                        access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        etx_gas_limit?: number | undefined;
+                        etx_gas_price?: Uint8Array | undefined;
+                        etx_gas_tip?: Uint8Array | undefined;
+                        etx_data?: Uint8Array | undefined;
+                        etx_access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        v?: Uint8Array | undefined;
+                        r?: Uint8Array | undefined;
+                        s?: Uint8Array | undefined;
+                        originating_tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_index?: number | undefined;
+                        etx_sender?: Uint8Array | undefined;
+                        tx_ins?: {
+                            tx_ins?: {
+                                previous_out_point?: {
+                                    hash?: {
+                                        value?: Uint8Array | undefined;
+                                    } | undefined;
+                                    index?: number | undefined;
+                                } | undefined;
+                                pub_key?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        tx_outs?: {
+                            tx_outs?: {
+                                denomination?: number | undefined;
+                                address?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        signature?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                manifest?: {
+                    manifest?: {
+                        value?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+            } | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoBlock;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoBlock;
+    }
+    class ProtoBody extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | ({} & (({
+            txs?: ProtoTransactions;
+        }) | ({
+            uncles?: ProtoHeaders;
+        }) | ({
+            etxs?: ProtoTransactions;
+        }) | ({
+            manifest?: ProtoManifest;
+        }))));
+        get txs(): ProtoTransactions;
+        set txs(value: ProtoTransactions);
+        get has_txs(): boolean;
+        get uncles(): ProtoHeaders;
+        set uncles(value: ProtoHeaders);
+        get has_uncles(): boolean;
+        get etxs(): ProtoTransactions;
+        set etxs(value: ProtoTransactions);
+        get has_etxs(): boolean;
+        get manifest(): ProtoManifest;
+        set manifest(value: ProtoManifest);
+        get has_manifest(): boolean;
+        get _txs(): "none" | "txs";
+        get _uncles(): "none" | "uncles";
+        get _etxs(): "none" | "etxs";
+        get _manifest(): "none" | "manifest";
+        static fromObject(data: {
+            txs?: ReturnType<typeof ProtoTransactions.prototype.toObject>;
+            uncles?: ReturnType<typeof ProtoHeaders.prototype.toObject>;
+            etxs?: ReturnType<typeof ProtoTransactions.prototype.toObject>;
+            manifest?: ReturnType<typeof ProtoManifest.prototype.toObject>;
+        }): ProtoBody;
+        toObject(): {
+            txs?: {
+                transactions?: {
+                    type?: number | undefined;
+                    to?: Uint8Array | undefined;
+                    nonce?: number | undefined;
+                    value?: Uint8Array | undefined;
+                    gas?: number | undefined;
+                    data?: Uint8Array | undefined;
+                    chain_id?: Uint8Array | undefined;
+                    gas_fee_cap?: Uint8Array | undefined;
+                    gas_tip_cap?: Uint8Array | undefined;
+                    access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    etx_gas_limit?: number | undefined;
+                    etx_gas_price?: Uint8Array | undefined;
+                    etx_gas_tip?: Uint8Array | undefined;
+                    etx_data?: Uint8Array | undefined;
+                    etx_access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    v?: Uint8Array | undefined;
+                    r?: Uint8Array | undefined;
+                    s?: Uint8Array | undefined;
+                    originating_tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_index?: number | undefined;
+                    etx_sender?: Uint8Array | undefined;
+                    tx_ins?: {
+                        tx_ins?: {
+                            previous_out_point?: {
+                                hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                index?: number | undefined;
+                            } | undefined;
+                            pub_key?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    tx_outs?: {
+                        tx_outs?: {
+                            denomination?: number | undefined;
+                            address?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    signature?: Uint8Array | undefined;
+                }[] | undefined;
+            } | undefined;
+            uncles?: {
+                headers?: {
+                    parent_hash?: {
+                        value?: Uint8Array | undefined;
+                    }[] | undefined;
+                    uncle_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    coinbase?: Uint8Array | undefined;
+                    evm_root?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_rollup_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    manifest_hash?: {
+                        value?: Uint8Array | undefined;
+                    }[] | undefined;
+                    receipt_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    difficulty?: Uint8Array | undefined;
+                    parent_entropy?: Uint8Array[] | undefined;
+                    parent_delta_s?: Uint8Array[] | undefined;
+                    number?: Uint8Array[] | undefined;
+                    gas_limit?: number | undefined;
+                    gas_used?: number | undefined;
+                    base_fee?: Uint8Array | undefined;
+                    location?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    time?: number | undefined;
+                    extra?: Uint8Array | undefined;
+                    mix_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    nonce?: number | undefined;
+                    utxo_root?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                }[] | undefined;
+            } | undefined;
+            etxs?: {
+                transactions?: {
+                    type?: number | undefined;
+                    to?: Uint8Array | undefined;
+                    nonce?: number | undefined;
+                    value?: Uint8Array | undefined;
+                    gas?: number | undefined;
+                    data?: Uint8Array | undefined;
+                    chain_id?: Uint8Array | undefined;
+                    gas_fee_cap?: Uint8Array | undefined;
+                    gas_tip_cap?: Uint8Array | undefined;
+                    access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    etx_gas_limit?: number | undefined;
+                    etx_gas_price?: Uint8Array | undefined;
+                    etx_gas_tip?: Uint8Array | undefined;
+                    etx_data?: Uint8Array | undefined;
+                    etx_access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    v?: Uint8Array | undefined;
+                    r?: Uint8Array | undefined;
+                    s?: Uint8Array | undefined;
+                    originating_tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_index?: number | undefined;
+                    etx_sender?: Uint8Array | undefined;
+                    tx_ins?: {
+                        tx_ins?: {
+                            previous_out_point?: {
+                                hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                index?: number | undefined;
+                            } | undefined;
+                            pub_key?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    tx_outs?: {
+                        tx_outs?: {
+                            denomination?: number | undefined;
+                            address?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    signature?: Uint8Array | undefined;
+                }[] | undefined;
+            } | undefined;
+            manifest?: {
+                manifest?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+            } | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoBody;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoBody;
+    }
+    class ProtoHeader extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | ({
+            parent_hash?: dependency_1.common.ProtoHash[];
+            manifest_hash?: dependency_1.common.ProtoHash[];
+            parent_entropy?: Uint8Array[];
+            parent_delta_s?: Uint8Array[];
+            number?: Uint8Array[];
+        } & (({
+            uncle_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            coinbase?: Uint8Array;
+        }) | ({
+            evm_root?: dependency_1.common.ProtoHash;
+        }) | ({
+            tx_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            etx_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            etx_rollup_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            receipt_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            difficulty?: Uint8Array;
+        }) | ({
+            gas_limit?: number;
+        }) | ({
+            gas_used?: number;
+        }) | ({
+            base_fee?: Uint8Array;
+        }) | ({
+            location?: dependency_1.common.ProtoLocation;
+        }) | ({
+            time?: number;
+        }) | ({
+            extra?: Uint8Array;
+        }) | ({
+            mix_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            nonce?: number;
+        }) | ({
+            utxo_root?: dependency_1.common.ProtoHash;
+        }))));
+        get parent_hash(): dependency_1.common.ProtoHash[];
+        set parent_hash(value: dependency_1.common.ProtoHash[]);
+        get uncle_hash(): dependency_1.common.ProtoHash;
+        set uncle_hash(value: dependency_1.common.ProtoHash);
+        get has_uncle_hash(): boolean;
+        get coinbase(): Uint8Array;
+        set coinbase(value: Uint8Array);
+        get has_coinbase(): boolean;
+        get evm_root(): dependency_1.common.ProtoHash;
+        set evm_root(value: dependency_1.common.ProtoHash);
+        get has_evm_root(): boolean;
+        get tx_hash(): dependency_1.common.ProtoHash;
+        set tx_hash(value: dependency_1.common.ProtoHash);
+        get has_tx_hash(): boolean;
+        get etx_hash(): dependency_1.common.ProtoHash;
+        set etx_hash(value: dependency_1.common.ProtoHash);
+        get has_etx_hash(): boolean;
+        get etx_rollup_hash(): dependency_1.common.ProtoHash;
+        set etx_rollup_hash(value: dependency_1.common.ProtoHash);
+        get has_etx_rollup_hash(): boolean;
+        get manifest_hash(): dependency_1.common.ProtoHash[];
+        set manifest_hash(value: dependency_1.common.ProtoHash[]);
+        get receipt_hash(): dependency_1.common.ProtoHash;
+        set receipt_hash(value: dependency_1.common.ProtoHash);
+        get has_receipt_hash(): boolean;
+        get difficulty(): Uint8Array;
+        set difficulty(value: Uint8Array);
+        get has_difficulty(): boolean;
+        get parent_entropy(): Uint8Array[];
+        set parent_entropy(value: Uint8Array[]);
+        get parent_delta_s(): Uint8Array[];
+        set parent_delta_s(value: Uint8Array[]);
+        get number(): Uint8Array[];
+        set number(value: Uint8Array[]);
+        get gas_limit(): number;
+        set gas_limit(value: number);
+        get has_gas_limit(): boolean;
+        get gas_used(): number;
+        set gas_used(value: number);
+        get has_gas_used(): boolean;
+        get base_fee(): Uint8Array;
+        set base_fee(value: Uint8Array);
+        get has_base_fee(): boolean;
+        get location(): dependency_1.common.ProtoLocation;
+        set location(value: dependency_1.common.ProtoLocation);
+        get has_location(): boolean;
+        get time(): number;
+        set time(value: number);
+        get has_time(): boolean;
+        get extra(): Uint8Array;
+        set extra(value: Uint8Array);
+        get has_extra(): boolean;
+        get mix_hash(): dependency_1.common.ProtoHash;
+        set mix_hash(value: dependency_1.common.ProtoHash);
+        get has_mix_hash(): boolean;
+        get nonce(): number;
+        set nonce(value: number);
+        get has_nonce(): boolean;
+        get utxo_root(): dependency_1.common.ProtoHash;
+        set utxo_root(value: dependency_1.common.ProtoHash);
+        get has_utxo_root(): boolean;
+        get _uncle_hash(): "none" | "uncle_hash";
+        get _coinbase(): "none" | "coinbase";
+        get _evm_root(): "none" | "evm_root";
+        get _tx_hash(): "none" | "tx_hash";
+        get _etx_hash(): "none" | "etx_hash";
+        get _etx_rollup_hash(): "none" | "etx_rollup_hash";
+        get _receipt_hash(): "none" | "receipt_hash";
+        get _difficulty(): "none" | "difficulty";
+        get _gas_limit(): "none" | "gas_limit";
+        get _gas_used(): "none" | "gas_used";
+        get _base_fee(): "none" | "base_fee";
+        get _location(): "none" | "location";
+        get _time(): "none" | "time";
+        get _extra(): "none" | "extra";
+        get _mix_hash(): "none" | "mix_hash";
+        get _nonce(): "none" | "nonce";
+        get _utxo_root(): "none" | "utxo_root";
+        static fromObject(data: {
+            parent_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>[];
+            uncle_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            coinbase?: Uint8Array;
+            evm_root?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            tx_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            etx_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            etx_rollup_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            manifest_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>[];
+            receipt_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            difficulty?: Uint8Array;
+            parent_entropy?: Uint8Array[];
+            parent_delta_s?: Uint8Array[];
+            number?: Uint8Array[];
+            gas_limit?: number;
+            gas_used?: number;
+            base_fee?: Uint8Array;
+            location?: ReturnType<typeof dependency_1.common.ProtoLocation.prototype.toObject>;
+            time?: number;
+            extra?: Uint8Array;
+            mix_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            nonce?: number;
+            utxo_root?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+        }): ProtoHeader;
+        toObject(): {
+            parent_hash?: {
+                value?: Uint8Array | undefined;
+            }[] | undefined;
+            uncle_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            coinbase?: Uint8Array | undefined;
+            evm_root?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            tx_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            etx_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            etx_rollup_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            manifest_hash?: {
+                value?: Uint8Array | undefined;
+            }[] | undefined;
+            receipt_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            difficulty?: Uint8Array | undefined;
+            parent_entropy?: Uint8Array[] | undefined;
+            parent_delta_s?: Uint8Array[] | undefined;
+            number?: Uint8Array[] | undefined;
+            gas_limit?: number | undefined;
+            gas_used?: number | undefined;
+            base_fee?: Uint8Array | undefined;
+            location?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            time?: number | undefined;
+            extra?: Uint8Array | undefined;
+            mix_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            nonce?: number | undefined;
+            utxo_root?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoHeader;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoHeader;
+    }
+    class ProtoWorkObjectHeader extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | ({} & (({
+            header_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            parent_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            number?: Uint8Array;
+        }) | ({
+            difficulty?: Uint8Array;
+        }) | ({
+            tx_hash?: dependency_1.common.ProtoHash;
+        }) | ({
+            nonce?: number;
+        }) | ({
+            location?: dependency_1.common.ProtoLocation;
+        }))));
+        get header_hash(): dependency_1.common.ProtoHash;
+        set header_hash(value: dependency_1.common.ProtoHash);
+        get has_header_hash(): boolean;
+        get parent_hash(): dependency_1.common.ProtoHash;
+        set parent_hash(value: dependency_1.common.ProtoHash);
+        get has_parent_hash(): boolean;
+        get number(): Uint8Array;
+        set number(value: Uint8Array);
+        get has_number(): boolean;
+        get difficulty(): Uint8Array;
+        set difficulty(value: Uint8Array);
+        get has_difficulty(): boolean;
+        get tx_hash(): dependency_1.common.ProtoHash;
+        set tx_hash(value: dependency_1.common.ProtoHash);
+        get has_tx_hash(): boolean;
+        get nonce(): number;
+        set nonce(value: number);
+        get has_nonce(): boolean;
+        get location(): dependency_1.common.ProtoLocation;
+        set location(value: dependency_1.common.ProtoLocation);
+        get has_location(): boolean;
+        get _header_hash(): "none" | "header_hash";
+        get _parent_hash(): "none" | "parent_hash";
+        get _number(): "number" | "none";
+        get _difficulty(): "none" | "difficulty";
+        get _tx_hash(): "none" | "tx_hash";
+        get _nonce(): "none" | "nonce";
+        get _location(): "none" | "location";
+        static fromObject(data: {
+            header_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            parent_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            number?: Uint8Array;
+            difficulty?: Uint8Array;
+            tx_hash?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>;
+            nonce?: number;
+            location?: ReturnType<typeof dependency_1.common.ProtoLocation.prototype.toObject>;
+        }): ProtoWorkObjectHeader;
+        toObject(): {
+            header_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            parent_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            number?: Uint8Array | undefined;
+            difficulty?: Uint8Array | undefined;
+            tx_hash?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+            nonce?: number | undefined;
+            location?: {
+                value?: Uint8Array | undefined;
+            } | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoWorkObjectHeader;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoWorkObjectHeader;
+    }
+    class ProtoWorkObjectBody extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | ({} & (({
+            header?: ProtoHeader;
+        }) | ({
+            transactions?: ProtoTransactions;
+        }) | ({
+            ext_transactions?: ProtoTransactions;
+        }) | ({
+            uncles?: ProtoWorkObjects;
+        }) | ({
+            manifest?: ProtoManifest;
+        }))));
+        get header(): ProtoHeader;
+        set header(value: ProtoHeader);
+        get has_header(): boolean;
+        get transactions(): ProtoTransactions;
+        set transactions(value: ProtoTransactions);
+        get has_transactions(): boolean;
+        get ext_transactions(): ProtoTransactions;
+        set ext_transactions(value: ProtoTransactions);
+        get has_ext_transactions(): boolean;
+        get uncles(): ProtoWorkObjects;
+        set uncles(value: ProtoWorkObjects);
+        get has_uncles(): boolean;
+        get manifest(): ProtoManifest;
+        set manifest(value: ProtoManifest);
+        get has_manifest(): boolean;
+        get _header(): "none" | "header";
+        get _transactions(): "none" | "transactions";
+        get _ext_transactions(): "none" | "ext_transactions";
+        get _uncles(): "none" | "uncles";
+        get _manifest(): "none" | "manifest";
+        static fromObject(data: {
+            header?: ReturnType<typeof ProtoHeader.prototype.toObject>;
+            transactions?: ReturnType<typeof ProtoTransactions.prototype.toObject>;
+            ext_transactions?: ReturnType<typeof ProtoTransactions.prototype.toObject>;
+            uncles?: ReturnType<typeof ProtoWorkObjects.prototype.toObject>;
+            manifest?: ReturnType<typeof ProtoManifest.prototype.toObject>;
+        }): ProtoWorkObjectBody;
+        toObject(): {
+            header?: {
+                parent_hash?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+                uncle_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                coinbase?: Uint8Array | undefined;
+                evm_root?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                tx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_rollup_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                manifest_hash?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+                receipt_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                difficulty?: Uint8Array | undefined;
+                parent_entropy?: Uint8Array[] | undefined;
+                parent_delta_s?: Uint8Array[] | undefined;
+                number?: Uint8Array[] | undefined;
+                gas_limit?: number | undefined;
+                gas_used?: number | undefined;
+                base_fee?: Uint8Array | undefined;
+                location?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                time?: number | undefined;
+                extra?: Uint8Array | undefined;
+                mix_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                nonce?: number | undefined;
+                utxo_root?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+            } | undefined;
+            transactions?: {
+                transactions?: {
+                    type?: number | undefined;
+                    to?: Uint8Array | undefined;
+                    nonce?: number | undefined;
+                    value?: Uint8Array | undefined;
+                    gas?: number | undefined;
+                    data?: Uint8Array | undefined;
+                    chain_id?: Uint8Array | undefined;
+                    gas_fee_cap?: Uint8Array | undefined;
+                    gas_tip_cap?: Uint8Array | undefined;
+                    access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    etx_gas_limit?: number | undefined;
+                    etx_gas_price?: Uint8Array | undefined;
+                    etx_gas_tip?: Uint8Array | undefined;
+                    etx_data?: Uint8Array | undefined;
+                    etx_access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    v?: Uint8Array | undefined;
+                    r?: Uint8Array | undefined;
+                    s?: Uint8Array | undefined;
+                    originating_tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_index?: number | undefined;
+                    etx_sender?: Uint8Array | undefined;
+                    tx_ins?: {
+                        tx_ins?: {
+                            previous_out_point?: {
+                                hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                index?: number | undefined;
+                            } | undefined;
+                            pub_key?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    tx_outs?: {
+                        tx_outs?: {
+                            denomination?: number | undefined;
+                            address?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    signature?: Uint8Array | undefined;
+                }[] | undefined;
+            } | undefined;
+            ext_transactions?: {
+                transactions?: {
+                    type?: number | undefined;
+                    to?: Uint8Array | undefined;
+                    nonce?: number | undefined;
+                    value?: Uint8Array | undefined;
+                    gas?: number | undefined;
+                    data?: Uint8Array | undefined;
+                    chain_id?: Uint8Array | undefined;
+                    gas_fee_cap?: Uint8Array | undefined;
+                    gas_tip_cap?: Uint8Array | undefined;
+                    access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    etx_gas_limit?: number | undefined;
+                    etx_gas_price?: Uint8Array | undefined;
+                    etx_gas_tip?: Uint8Array | undefined;
+                    etx_data?: Uint8Array | undefined;
+                    etx_access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    v?: Uint8Array | undefined;
+                    r?: Uint8Array | undefined;
+                    s?: Uint8Array | undefined;
+                    originating_tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_index?: number | undefined;
+                    etx_sender?: Uint8Array | undefined;
+                    tx_ins?: {
+                        tx_ins?: {
+                            previous_out_point?: {
+                                hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                index?: number | undefined;
+                            } | undefined;
+                            pub_key?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    tx_outs?: {
+                        tx_outs?: {
+                            denomination?: number | undefined;
+                            address?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    signature?: Uint8Array | undefined;
+                }[] | undefined;
+            } | undefined;
+            uncles?: {
+                work_objects?: {
+                    wo_header?: {
+                        header_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        parent_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        number?: Uint8Array | undefined;
+                        difficulty?: Uint8Array | undefined;
+                        tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        nonce?: number | undefined;
+                        location?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                    } | undefined;
+                    wo_body?: {
+                        header?: {
+                            parent_hash?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                            uncle_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            coinbase?: Uint8Array | undefined;
+                            evm_root?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            tx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            etx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            etx_rollup_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            manifest_hash?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                            receipt_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            difficulty?: Uint8Array | undefined;
+                            parent_entropy?: Uint8Array[] | undefined;
+                            parent_delta_s?: Uint8Array[] | undefined;
+                            number?: Uint8Array[] | undefined;
+                            gas_limit?: number | undefined;
+                            gas_used?: number | undefined;
+                            base_fee?: Uint8Array | undefined;
+                            location?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            time?: number | undefined;
+                            extra?: Uint8Array | undefined;
+                            mix_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            nonce?: number | undefined;
+                            utxo_root?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                        } | undefined;
+                        transactions?: {
+                            transactions?: {
+                                type?: number | undefined;
+                                to?: Uint8Array | undefined;
+                                nonce?: number | undefined;
+                                value?: Uint8Array | undefined;
+                                gas?: number | undefined;
+                                data?: Uint8Array | undefined;
+                                chain_id?: Uint8Array | undefined;
+                                gas_fee_cap?: Uint8Array | undefined;
+                                gas_tip_cap?: Uint8Array | undefined;
+                                access_list?: {
+                                    access_tuples?: {
+                                        address?: Uint8Array | undefined;
+                                        storage_key?: {
+                                            value?: Uint8Array | undefined;
+                                        }[] | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                etx_gas_limit?: number | undefined;
+                                etx_gas_price?: Uint8Array | undefined;
+                                etx_gas_tip?: Uint8Array | undefined;
+                                etx_data?: Uint8Array | undefined;
+                                etx_access_list?: {
+                                    access_tuples?: {
+                                        address?: Uint8Array | undefined;
+                                        storage_key?: {
+                                            value?: Uint8Array | undefined;
+                                        }[] | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                v?: Uint8Array | undefined;
+                                r?: Uint8Array | undefined;
+                                s?: Uint8Array | undefined;
+                                originating_tx_hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                etx_index?: number | undefined;
+                                etx_sender?: Uint8Array | undefined;
+                                tx_ins?: {
+                                    tx_ins?: {
+                                        previous_out_point?: {
+                                            hash?: {
+                                                value?: Uint8Array | undefined;
+                                            } | undefined;
+                                            index?: number | undefined;
+                                        } | undefined;
+                                        pub_key?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                tx_outs?: {
+                                    tx_outs?: {
+                                        denomination?: number | undefined;
+                                        address?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                signature?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        ext_transactions?: {
+                            transactions?: {
+                                type?: number | undefined;
+                                to?: Uint8Array | undefined;
+                                nonce?: number | undefined;
+                                value?: Uint8Array | undefined;
+                                gas?: number | undefined;
+                                data?: Uint8Array | undefined;
+                                chain_id?: Uint8Array | undefined;
+                                gas_fee_cap?: Uint8Array | undefined;
+                                gas_tip_cap?: Uint8Array | undefined;
+                                access_list?: {
+                                    access_tuples?: {
+                                        address?: Uint8Array | undefined;
+                                        storage_key?: {
+                                            value?: Uint8Array | undefined;
+                                        }[] | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                etx_gas_limit?: number | undefined;
+                                etx_gas_price?: Uint8Array | undefined;
+                                etx_gas_tip?: Uint8Array | undefined;
+                                etx_data?: Uint8Array | undefined;
+                                etx_access_list?: {
+                                    access_tuples?: {
+                                        address?: Uint8Array | undefined;
+                                        storage_key?: {
+                                            value?: Uint8Array | undefined;
+                                        }[] | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                v?: Uint8Array | undefined;
+                                r?: Uint8Array | undefined;
+                                s?: Uint8Array | undefined;
+                                originating_tx_hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                etx_index?: number | undefined;
+                                etx_sender?: Uint8Array | undefined;
+                                tx_ins?: {
+                                    tx_ins?: {
+                                        previous_out_point?: {
+                                            hash?: {
+                                                value?: Uint8Array | undefined;
+                                            } | undefined;
+                                            index?: number | undefined;
+                                        } | undefined;
+                                        pub_key?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                tx_outs?: {
+                                    tx_outs?: {
+                                        denomination?: number | undefined;
+                                        address?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                } | undefined;
+                                signature?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        uncles?: any | undefined;
+                        manifest?: {
+                            manifest?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                    } | undefined;
+                    tx?: {
+                        type?: number | undefined;
+                        to?: Uint8Array | undefined;
+                        nonce?: number | undefined;
+                        value?: Uint8Array | undefined;
+                        gas?: number | undefined;
+                        data?: Uint8Array | undefined;
+                        chain_id?: Uint8Array | undefined;
+                        gas_fee_cap?: Uint8Array | undefined;
+                        gas_tip_cap?: Uint8Array | undefined;
+                        access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        etx_gas_limit?: number | undefined;
+                        etx_gas_price?: Uint8Array | undefined;
+                        etx_gas_tip?: Uint8Array | undefined;
+                        etx_data?: Uint8Array | undefined;
+                        etx_access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        v?: Uint8Array | undefined;
+                        r?: Uint8Array | undefined;
+                        s?: Uint8Array | undefined;
+                        originating_tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_index?: number | undefined;
+                        etx_sender?: Uint8Array | undefined;
+                        tx_ins?: {
+                            tx_ins?: {
+                                previous_out_point?: {
+                                    hash?: {
+                                        value?: Uint8Array | undefined;
+                                    } | undefined;
+                                    index?: number | undefined;
+                                } | undefined;
+                                pub_key?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        tx_outs?: {
+                            tx_outs?: {
+                                denomination?: number | undefined;
+                                address?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
+                }[] | undefined;
+            } | undefined;
+            manifest?: {
+                manifest?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+            } | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoWorkObjectBody;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoWorkObjectBody;
+    }
+    class ProtoWorkObject extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | ({} & (({
+            wo_header?: ProtoWorkObjectHeader;
+        }) | ({
+            wo_body?: ProtoWorkObjectBody;
+        }) | ({
+            tx?: ProtoTransaction;
+        }))));
+        get wo_header(): ProtoWorkObjectHeader;
+        set wo_header(value: ProtoWorkObjectHeader);
+        get has_wo_header(): boolean;
+        get wo_body(): ProtoWorkObjectBody;
+        set wo_body(value: ProtoWorkObjectBody);
+        get has_wo_body(): boolean;
+        get tx(): ProtoTransaction;
+        set tx(value: ProtoTransaction);
+        get has_tx(): boolean;
+        get _wo_header(): "none" | "wo_header";
+        get _wo_body(): "none" | "wo_body";
+        get _tx(): "none" | "tx";
+        static fromObject(data: {
+            wo_header?: ReturnType<typeof ProtoWorkObjectHeader.prototype.toObject>;
+            wo_body?: ReturnType<typeof ProtoWorkObjectBody.prototype.toObject>;
+            tx?: ReturnType<typeof ProtoTransaction.prototype.toObject>;
+        }): ProtoWorkObject;
+        toObject(): {
+            wo_header?: {
+                header_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                parent_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                number?: Uint8Array | undefined;
+                difficulty?: Uint8Array | undefined;
+                tx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                nonce?: number | undefined;
+                location?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+            } | undefined;
+            wo_body?: {
+                header?: {
+                    parent_hash?: {
+                        value?: Uint8Array | undefined;
+                    }[] | undefined;
+                    uncle_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    coinbase?: Uint8Array | undefined;
+                    evm_root?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_rollup_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    manifest_hash?: {
+                        value?: Uint8Array | undefined;
+                    }[] | undefined;
+                    receipt_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    difficulty?: Uint8Array | undefined;
+                    parent_entropy?: Uint8Array[] | undefined;
+                    parent_delta_s?: Uint8Array[] | undefined;
+                    number?: Uint8Array[] | undefined;
+                    gas_limit?: number | undefined;
+                    gas_used?: number | undefined;
+                    base_fee?: Uint8Array | undefined;
+                    location?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    time?: number | undefined;
+                    extra?: Uint8Array | undefined;
+                    mix_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    nonce?: number | undefined;
+                    utxo_root?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                } | undefined;
+                transactions?: {
+                    transactions?: {
+                        type?: number | undefined;
+                        to?: Uint8Array | undefined;
+                        nonce?: number | undefined;
+                        value?: Uint8Array | undefined;
+                        gas?: number | undefined;
+                        data?: Uint8Array | undefined;
+                        chain_id?: Uint8Array | undefined;
+                        gas_fee_cap?: Uint8Array | undefined;
+                        gas_tip_cap?: Uint8Array | undefined;
+                        access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        etx_gas_limit?: number | undefined;
+                        etx_gas_price?: Uint8Array | undefined;
+                        etx_gas_tip?: Uint8Array | undefined;
+                        etx_data?: Uint8Array | undefined;
+                        etx_access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        v?: Uint8Array | undefined;
+                        r?: Uint8Array | undefined;
+                        s?: Uint8Array | undefined;
+                        originating_tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_index?: number | undefined;
+                        etx_sender?: Uint8Array | undefined;
+                        tx_ins?: {
+                            tx_ins?: {
+                                previous_out_point?: {
+                                    hash?: {
+                                        value?: Uint8Array | undefined;
+                                    } | undefined;
+                                    index?: number | undefined;
+                                } | undefined;
+                                pub_key?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        tx_outs?: {
+                            tx_outs?: {
+                                denomination?: number | undefined;
+                                address?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        signature?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                ext_transactions?: {
+                    transactions?: {
+                        type?: number | undefined;
+                        to?: Uint8Array | undefined;
+                        nonce?: number | undefined;
+                        value?: Uint8Array | undefined;
+                        gas?: number | undefined;
+                        data?: Uint8Array | undefined;
+                        chain_id?: Uint8Array | undefined;
+                        gas_fee_cap?: Uint8Array | undefined;
+                        gas_tip_cap?: Uint8Array | undefined;
+                        access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        etx_gas_limit?: number | undefined;
+                        etx_gas_price?: Uint8Array | undefined;
+                        etx_gas_tip?: Uint8Array | undefined;
+                        etx_data?: Uint8Array | undefined;
+                        etx_access_list?: {
+                            access_tuples?: {
+                                address?: Uint8Array | undefined;
+                                storage_key?: {
+                                    value?: Uint8Array | undefined;
+                                }[] | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        v?: Uint8Array | undefined;
+                        r?: Uint8Array | undefined;
+                        s?: Uint8Array | undefined;
+                        originating_tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_index?: number | undefined;
+                        etx_sender?: Uint8Array | undefined;
+                        tx_ins?: {
+                            tx_ins?: {
+                                previous_out_point?: {
+                                    hash?: {
+                                        value?: Uint8Array | undefined;
+                                    } | undefined;
+                                    index?: number | undefined;
+                                } | undefined;
+                                pub_key?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        tx_outs?: {
+                            tx_outs?: {
+                                denomination?: number | undefined;
+                                address?: Uint8Array | undefined;
+                            }[] | undefined;
+                        } | undefined;
+                        signature?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                uncles?: {
+                    work_objects?: {
+                        wo_header?: {
+                            header_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            parent_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            number?: Uint8Array | undefined;
+                            difficulty?: Uint8Array | undefined;
+                            tx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            nonce?: number | undefined;
+                            location?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                        } | undefined;
+                        wo_body?: any | undefined;
+                        tx?: {
+                            type?: number | undefined;
+                            to?: Uint8Array | undefined;
+                            nonce?: number | undefined;
+                            value?: Uint8Array | undefined;
+                            gas?: number | undefined;
+                            data?: Uint8Array | undefined;
+                            chain_id?: Uint8Array | undefined;
+                            gas_fee_cap?: Uint8Array | undefined;
+                            gas_tip_cap?: Uint8Array | undefined;
+                            access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            etx_gas_limit?: number | undefined;
+                            etx_gas_price?: Uint8Array | undefined;
+                            etx_gas_tip?: Uint8Array | undefined;
+                            etx_data?: Uint8Array | undefined;
+                            etx_access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            v?: Uint8Array | undefined;
+                            r?: Uint8Array | undefined;
+                            s?: Uint8Array | undefined;
+                            originating_tx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            etx_index?: number | undefined;
+                            etx_sender?: Uint8Array | undefined;
+                            tx_ins?: {
+                                tx_ins?: {
+                                    previous_out_point?: {
+                                        hash?: {
+                                            value?: Uint8Array | undefined;
+                                        } | undefined;
+                                        index?: number | undefined;
+                                    } | undefined;
+                                    pub_key?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            tx_outs?: {
+                                tx_outs?: {
+                                    denomination?: number | undefined;
+                                    address?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            signature?: Uint8Array | undefined;
+                        } | undefined;
+                    }[] | undefined;
+                } | undefined;
+                manifest?: {
+                    manifest?: {
+                        value?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+            } | undefined;
+            tx?: {
+                type?: number | undefined;
+                to?: Uint8Array | undefined;
+                nonce?: number | undefined;
+                value?: Uint8Array | undefined;
+                gas?: number | undefined;
+                data?: Uint8Array | undefined;
+                chain_id?: Uint8Array | undefined;
+                gas_fee_cap?: Uint8Array | undefined;
+                gas_tip_cap?: Uint8Array | undefined;
+                access_list?: {
+                    access_tuples?: {
+                        address?: Uint8Array | undefined;
+                        storage_key?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                    }[] | undefined;
+                } | undefined;
+                etx_gas_limit?: number | undefined;
+                etx_gas_price?: Uint8Array | undefined;
+                etx_gas_tip?: Uint8Array | undefined;
+                etx_data?: Uint8Array | undefined;
+                etx_access_list?: {
+                    access_tuples?: {
+                        address?: Uint8Array | undefined;
+                        storage_key?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                    }[] | undefined;
+                } | undefined;
+                v?: Uint8Array | undefined;
+                r?: Uint8Array | undefined;
+                s?: Uint8Array | undefined;
+                originating_tx_hash?: {
+                    value?: Uint8Array | undefined;
+                } | undefined;
+                etx_index?: number | undefined;
+                etx_sender?: Uint8Array | undefined;
+                tx_ins?: {
+                    tx_ins?: {
+                        previous_out_point?: {
+                            hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            index?: number | undefined;
+                        } | undefined;
+                        pub_key?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                tx_outs?: {
+                    tx_outs?: {
+                        denomination?: number | undefined;
+                        address?: Uint8Array | undefined;
+                    }[] | undefined;
+                } | undefined;
+                signature?: Uint8Array | undefined;
+            } | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoWorkObject;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoWorkObject;
+    }
+    class ProtoWorkObjects extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | {
+            work_objects?: ProtoWorkObject[];
+        });
+        get work_objects(): ProtoWorkObject[];
+        set work_objects(value: ProtoWorkObject[]);
+        static fromObject(data: {
+            work_objects?: ReturnType<typeof ProtoWorkObject.prototype.toObject>[];
+        }): ProtoWorkObjects;
+        toObject(): {
+            work_objects?: {
+                wo_header?: {
+                    header_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    parent_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    number?: Uint8Array | undefined;
+                    difficulty?: Uint8Array | undefined;
+                    tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    nonce?: number | undefined;
+                    location?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                } | undefined;
+                wo_body?: {
+                    header?: {
+                        parent_hash?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                        uncle_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        coinbase?: Uint8Array | undefined;
+                        evm_root?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_rollup_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        manifest_hash?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                        receipt_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        difficulty?: Uint8Array | undefined;
+                        parent_entropy?: Uint8Array[] | undefined;
+                        parent_delta_s?: Uint8Array[] | undefined;
+                        number?: Uint8Array[] | undefined;
+                        gas_limit?: number | undefined;
+                        gas_used?: number | undefined;
+                        base_fee?: Uint8Array | undefined;
+                        location?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        time?: number | undefined;
+                        extra?: Uint8Array | undefined;
+                        mix_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        nonce?: number | undefined;
+                        utxo_root?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                    } | undefined;
+                    transactions?: {
+                        transactions?: {
+                            type?: number | undefined;
+                            to?: Uint8Array | undefined;
+                            nonce?: number | undefined;
+                            value?: Uint8Array | undefined;
+                            gas?: number | undefined;
+                            data?: Uint8Array | undefined;
+                            chain_id?: Uint8Array | undefined;
+                            gas_fee_cap?: Uint8Array | undefined;
+                            gas_tip_cap?: Uint8Array | undefined;
+                            access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            etx_gas_limit?: number | undefined;
+                            etx_gas_price?: Uint8Array | undefined;
+                            etx_gas_tip?: Uint8Array | undefined;
+                            etx_data?: Uint8Array | undefined;
+                            etx_access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            v?: Uint8Array | undefined;
+                            r?: Uint8Array | undefined;
+                            s?: Uint8Array | undefined;
+                            originating_tx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            etx_index?: number | undefined;
+                            etx_sender?: Uint8Array | undefined;
+                            tx_ins?: {
+                                tx_ins?: {
+                                    previous_out_point?: {
+                                        hash?: {
+                                            value?: Uint8Array | undefined;
+                                        } | undefined;
+                                        index?: number | undefined;
+                                    } | undefined;
+                                    pub_key?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            tx_outs?: {
+                                tx_outs?: {
+                                    denomination?: number | undefined;
+                                    address?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            signature?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    ext_transactions?: {
+                        transactions?: {
+                            type?: number | undefined;
+                            to?: Uint8Array | undefined;
+                            nonce?: number | undefined;
+                            value?: Uint8Array | undefined;
+                            gas?: number | undefined;
+                            data?: Uint8Array | undefined;
+                            chain_id?: Uint8Array | undefined;
+                            gas_fee_cap?: Uint8Array | undefined;
+                            gas_tip_cap?: Uint8Array | undefined;
+                            access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            etx_gas_limit?: number | undefined;
+                            etx_gas_price?: Uint8Array | undefined;
+                            etx_gas_tip?: Uint8Array | undefined;
+                            etx_data?: Uint8Array | undefined;
+                            etx_access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            v?: Uint8Array | undefined;
+                            r?: Uint8Array | undefined;
+                            s?: Uint8Array | undefined;
+                            originating_tx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            etx_index?: number | undefined;
+                            etx_sender?: Uint8Array | undefined;
+                            tx_ins?: {
+                                tx_ins?: {
+                                    previous_out_point?: {
+                                        hash?: {
+                                            value?: Uint8Array | undefined;
+                                        } | undefined;
+                                        index?: number | undefined;
+                                    } | undefined;
+                                    pub_key?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            tx_outs?: {
+                                tx_outs?: {
+                                    denomination?: number | undefined;
+                                    address?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            signature?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    uncles?: {
+                        work_objects?: any[] | undefined;
+                    } | undefined;
+                    manifest?: {
+                        manifest?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                } | undefined;
+                tx?: {
+                    type?: number | undefined;
+                    to?: Uint8Array | undefined;
+                    nonce?: number | undefined;
+                    value?: Uint8Array | undefined;
+                    gas?: number | undefined;
+                    data?: Uint8Array | undefined;
+                    chain_id?: Uint8Array | undefined;
+                    gas_fee_cap?: Uint8Array | undefined;
+                    gas_tip_cap?: Uint8Array | undefined;
+                    access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    etx_gas_limit?: number | undefined;
+                    etx_gas_price?: Uint8Array | undefined;
+                    etx_gas_tip?: Uint8Array | undefined;
+                    etx_data?: Uint8Array | undefined;
+                    etx_access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    v?: Uint8Array | undefined;
+                    r?: Uint8Array | undefined;
+                    s?: Uint8Array | undefined;
+                    originating_tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_index?: number | undefined;
+                    etx_sender?: Uint8Array | undefined;
+                    tx_ins?: {
+                        tx_ins?: {
+                            previous_out_point?: {
+                                hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                index?: number | undefined;
+                            } | undefined;
+                            pub_key?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    tx_outs?: {
+                        tx_outs?: {
+                            denomination?: number | undefined;
+                            address?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
+            }[] | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoWorkObjects;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoWorkObjects;
+    }
+    class ProtoPendingHeader extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | ({} & (({
+            wo?: ProtoWorkObject;
+        }) | ({
+            termini?: ProtoTermini;
+        }))));
+        get wo(): ProtoWorkObject;
+        set wo(value: ProtoWorkObject);
+        get has_wo(): boolean;
+        get termini(): ProtoTermini;
+        set termini(value: ProtoTermini);
+        get has_termini(): boolean;
+        get _wo(): "none" | "wo";
+        get _termini(): "none" | "termini";
+        static fromObject(data: {
+            wo?: ReturnType<typeof ProtoWorkObject.prototype.toObject>;
+            termini?: ReturnType<typeof ProtoTermini.prototype.toObject>;
+        }): ProtoPendingHeader;
+        toObject(): {
+            wo?: {
+                wo_header?: {
+                    header_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    parent_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    number?: Uint8Array | undefined;
+                    difficulty?: Uint8Array | undefined;
+                    tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    nonce?: number | undefined;
+                    location?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                } | undefined;
+                wo_body?: {
+                    header?: {
+                        parent_hash?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                        uncle_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        coinbase?: Uint8Array | undefined;
+                        evm_root?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        tx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        etx_rollup_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        manifest_hash?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                        receipt_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        difficulty?: Uint8Array | undefined;
+                        parent_entropy?: Uint8Array[] | undefined;
+                        parent_delta_s?: Uint8Array[] | undefined;
+                        number?: Uint8Array[] | undefined;
+                        gas_limit?: number | undefined;
+                        gas_used?: number | undefined;
+                        base_fee?: Uint8Array | undefined;
+                        location?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        time?: number | undefined;
+                        extra?: Uint8Array | undefined;
+                        mix_hash?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                        nonce?: number | undefined;
+                        utxo_root?: {
+                            value?: Uint8Array | undefined;
+                        } | undefined;
+                    } | undefined;
+                    transactions?: {
+                        transactions?: {
+                            type?: number | undefined;
+                            to?: Uint8Array | undefined;
+                            nonce?: number | undefined;
+                            value?: Uint8Array | undefined;
+                            gas?: number | undefined;
+                            data?: Uint8Array | undefined;
+                            chain_id?: Uint8Array | undefined;
+                            gas_fee_cap?: Uint8Array | undefined;
+                            gas_tip_cap?: Uint8Array | undefined;
+                            access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            etx_gas_limit?: number | undefined;
+                            etx_gas_price?: Uint8Array | undefined;
+                            etx_gas_tip?: Uint8Array | undefined;
+                            etx_data?: Uint8Array | undefined;
+                            etx_access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            v?: Uint8Array | undefined;
+                            r?: Uint8Array | undefined;
+                            s?: Uint8Array | undefined;
+                            originating_tx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            etx_index?: number | undefined;
+                            etx_sender?: Uint8Array | undefined;
+                            tx_ins?: {
+                                tx_ins?: {
+                                    previous_out_point?: {
+                                        hash?: {
+                                            value?: Uint8Array | undefined;
+                                        } | undefined;
+                                        index?: number | undefined;
+                                    } | undefined;
+                                    pub_key?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            tx_outs?: {
+                                tx_outs?: {
+                                    denomination?: number | undefined;
+                                    address?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            signature?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    ext_transactions?: {
+                        transactions?: {
+                            type?: number | undefined;
+                            to?: Uint8Array | undefined;
+                            nonce?: number | undefined;
+                            value?: Uint8Array | undefined;
+                            gas?: number | undefined;
+                            data?: Uint8Array | undefined;
+                            chain_id?: Uint8Array | undefined;
+                            gas_fee_cap?: Uint8Array | undefined;
+                            gas_tip_cap?: Uint8Array | undefined;
+                            access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            etx_gas_limit?: number | undefined;
+                            etx_gas_price?: Uint8Array | undefined;
+                            etx_gas_tip?: Uint8Array | undefined;
+                            etx_data?: Uint8Array | undefined;
+                            etx_access_list?: {
+                                access_tuples?: {
+                                    address?: Uint8Array | undefined;
+                                    storage_key?: {
+                                        value?: Uint8Array | undefined;
+                                    }[] | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            v?: Uint8Array | undefined;
+                            r?: Uint8Array | undefined;
+                            s?: Uint8Array | undefined;
+                            originating_tx_hash?: {
+                                value?: Uint8Array | undefined;
+                            } | undefined;
+                            etx_index?: number | undefined;
+                            etx_sender?: Uint8Array | undefined;
+                            tx_ins?: {
+                                tx_ins?: {
+                                    previous_out_point?: {
+                                        hash?: {
+                                            value?: Uint8Array | undefined;
+                                        } | undefined;
+                                        index?: number | undefined;
+                                    } | undefined;
+                                    pub_key?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            tx_outs?: {
+                                tx_outs?: {
+                                    denomination?: number | undefined;
+                                    address?: Uint8Array | undefined;
+                                }[] | undefined;
+                            } | undefined;
+                            signature?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    uncles?: {
+                        work_objects?: any[] | undefined;
+                    } | undefined;
+                    manifest?: {
+                        manifest?: {
+                            value?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                } | undefined;
+                tx?: {
+                    type?: number | undefined;
+                    to?: Uint8Array | undefined;
+                    nonce?: number | undefined;
+                    value?: Uint8Array | undefined;
+                    gas?: number | undefined;
+                    data?: Uint8Array | undefined;
+                    chain_id?: Uint8Array | undefined;
+                    gas_fee_cap?: Uint8Array | undefined;
+                    gas_tip_cap?: Uint8Array | undefined;
+                    access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    etx_gas_limit?: number | undefined;
+                    etx_gas_price?: Uint8Array | undefined;
+                    etx_gas_tip?: Uint8Array | undefined;
+                    etx_data?: Uint8Array | undefined;
+                    etx_access_list?: {
+                        access_tuples?: {
+                            address?: Uint8Array | undefined;
+                            storage_key?: {
+                                value?: Uint8Array | undefined;
+                            }[] | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    v?: Uint8Array | undefined;
+                    r?: Uint8Array | undefined;
+                    s?: Uint8Array | undefined;
+                    originating_tx_hash?: {
+                        value?: Uint8Array | undefined;
+                    } | undefined;
+                    etx_index?: number | undefined;
+                    etx_sender?: Uint8Array | undefined;
+                    tx_ins?: {
+                        tx_ins?: {
+                            previous_out_point?: {
+                                hash?: {
+                                    value?: Uint8Array | undefined;
+                                } | undefined;
+                                index?: number | undefined;
+                            } | undefined;
+                            pub_key?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    tx_outs?: {
+                        tx_outs?: {
+                            denomination?: number | undefined;
+                            address?: Uint8Array | undefined;
+                        }[] | undefined;
+                    } | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
+            } | undefined;
+            termini?: {
+                dom_termini?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+                sub_termini?: {
+                    value?: Uint8Array | undefined;
+                }[] | undefined;
+            } | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoPendingHeader;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoPendingHeader;
+    }
+    class ProtoTermini extends pb_1.Message {
+        #private;
+        constructor(data?: any[] | {
+            dom_termini?: dependency_1.common.ProtoHash[];
+            sub_termini?: dependency_1.common.ProtoHash[];
+        });
+        get dom_termini(): dependency_1.common.ProtoHash[];
+        set dom_termini(value: dependency_1.common.ProtoHash[]);
+        get sub_termini(): dependency_1.common.ProtoHash[];
+        set sub_termini(value: dependency_1.common.ProtoHash[]);
+        static fromObject(data: {
+            dom_termini?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>[];
+            sub_termini?: ReturnType<typeof dependency_1.common.ProtoHash.prototype.toObject>[];
+        }): ProtoTermini;
+        toObject(): {
+            dom_termini?: {
+                value?: Uint8Array | undefined;
+            }[] | undefined;
+            sub_termini?: {
+                value?: Uint8Array | undefined;
+            }[] | undefined;
+        };
+        serialize(): Uint8Array;
+        serialize(w: pb_1.BinaryWriter): void;
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): ProtoTermini;
+        serializeBinary(): Uint8Array;
+        static deserializeBinary(bytes: Uint8Array): ProtoTermini;
     }
 }
 //# sourceMappingURL=proto-block.d.ts.map

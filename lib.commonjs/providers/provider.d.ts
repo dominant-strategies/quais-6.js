@@ -19,6 +19,7 @@ import type { Network } from "./network.js";
  */
 export type BlockTag = BigNumberish | string;
 import { BlockParams, LogParams, TransactionReceiptParams, TransactionResponseParams } from "./formatting.js";
+import { WorkObjectLike } from "../transaction/work-object.js";
 /**
  *  A **FeeData** wraps all the fee-related values associated with
  *  the network.
@@ -1006,6 +1007,10 @@ export interface Provider extends ContractRunner, EventEmitterable<ProviderEvent
      *  Get the best guess at the recommended [[FeeData]].
      */
     getFeeData(): Promise<FeeData>;
+    /**
+     * Get a work object to package a transaction in.
+     */
+    getPendingHeader(): Promise<WorkObjectLike>;
     /**
      *  Get the account balance (in wei) of %%address%%. If %%blockTag%%
      *  is specified and the node supports archive access for that

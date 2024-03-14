@@ -1301,7 +1301,8 @@ function createRemovedTransactionFilter(tx) {
     return { orphan: "drop-transaction", tx };
 }
 function createRemovedLogFilter(log) {
-    return { orphan: "drop-log", log: {
+    return {
+        orphan: "drop-log", log: {
             transactionHash: log.transactionHash,
             blockHash: log.blockHash,
             blockNumber: log.blockNumber,
@@ -1309,6 +1310,7 @@ function createRemovedLogFilter(log) {
             data: log.data,
             topics: Object.freeze(log.topics.slice()),
             index: log.index
-        } };
+        }
+    };
 }
 //# sourceMappingURL=provider.js.map

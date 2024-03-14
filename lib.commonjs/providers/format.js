@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatTransactionResponse = exports.formatTransactionReceipt = exports.formatEtx = exports.formatReceiptLog = exports.formatBlock = exports.formatLog = exports.formatUint256 = exports.formatHash = exports.formatData = exports.formatBoolean = exports.object = exports.arrayOf = exports.allowNull = void 0;
+exports.formatTransactionResponse = exports.formatTransactionReceipt = exports.formatEtx = exports.formatReceiptLog = exports.formatBlock = exports.formatLog = exports.formatNumber = exports.handleNumber = exports.formatUint256 = exports.formatHash = exports.formatData = exports.formatBoolean = exports.object = exports.arrayOf = exports.allowNull = void 0;
 /**
  *  @_ignore
  */
@@ -87,6 +87,20 @@ function formatUint256(value) {
     return (0, index_js_4.zeroPadValue)(value, 32);
 }
 exports.formatUint256 = formatUint256;
+function handleNumber(_value, param) {
+    if (_value === "0x") {
+        return 0;
+    }
+    return (0, index_js_4.getNumber)(_value, param);
+}
+exports.handleNumber = handleNumber;
+function formatNumber(_value, name) {
+    const value = (0, index_js_4.getBigInt)(_value, "value");
+    const result = (0, index_js_4.toBeArray)(value);
+    (0, index_js_4.assertArgument)(result.length <= 32, `value too large`, `tx.${name}`, value);
+    return result;
+}
+exports.formatNumber = formatNumber;
 const _formatLog = object({
     address: index_js_1.getAddress,
     blockHash: formatHash,

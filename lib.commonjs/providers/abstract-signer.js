@@ -70,10 +70,10 @@ class AbstractSigner {
             pop.nonce = await this.getNonce("pending");
         }
         if (pop.type == null) {
-            pop.type = await (0, index_js_4.getTxType)(pop.from ?? null, pop.to ?? null);
+            pop.type = (0, index_js_4.getTxType)(pop.from ?? null, pop.to ?? null);
         }
         if (pop.gasLimit == null) {
-            if (tx.type == 0)
+            if (pop.type == 0)
                 pop.gasLimit = await this.estimateGas(pop);
             else {
                 //Special cases for type 2 tx to bypass address out of scope in the node
@@ -126,7 +126,6 @@ class AbstractSigner {
         delete pop.from;
         const txObj = index_js_2.Transaction.from(pop);
         const signedTx = await this.signTransaction(txObj);
-        console.log("signedTX: ", JSON.stringify(txObj));
         return await provider.broadcastTransaction(signedTx);
     }
 }
