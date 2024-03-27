@@ -943,6 +943,8 @@ export class TransactionResponse {
     etxGasTip;
     etxData;
     etxAccessList;
+    inputs;
+    outputs;
     #startBlock;
     /**
      *  @_ignore:

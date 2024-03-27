@@ -2,6 +2,7 @@ import { Signature } from "../crypto/index.js";
 import type { BigNumberish, BytesLike } from "../utils/index.js";
 import type { SignatureLike } from "../crypto/index.js";
 import type { AccessList, AccessListish } from "./index.js";
+import type { UTXOTransactionInput, UTXOTransactionOutput } from "./utxo.js";
 export interface TransactionLike<A = string> {
     /**
      *  The type.
@@ -75,10 +76,9 @@ export interface TransactionLike<A = string> {
      *  The external data.
      */
     externalData?: null | string;
-    /**
-     *  The access list for berlin and london transactions.
-     */
     externalAccessList?: null | AccessListish;
+    UTXOinputs?: null | Array<UTXOTransactionInput>;
+    UTXOoutputs?: null | Array<UTXOTransactionOutput>;
 }
 /**
  *  A **Transaction** describes an operation to be executed on
@@ -203,6 +203,10 @@ export declare class Transaction implements TransactionLike<string> {
      */
     get externalAccessList(): null | AccessList;
     set externalAccessList(value: null | AccessListish);
+    get UTXOinputs(): null | UTXOTransactionInput[];
+    set UTXOinputs(value: null | UTXOTransactionInput[]);
+    get UTXOoutputs(): null | UTXOTransactionOutput[];
+    set UTXOoutputs(value: null | UTXOTransactionOutput[]);
     /**
      *  Creates a new Transaction with default values.
      */

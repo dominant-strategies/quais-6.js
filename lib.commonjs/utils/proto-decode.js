@@ -2,13 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decodeProto = void 0;
 const tslib_1 = require("tslib");
-const Proto = tslib_1.__importStar(require("./ProtoBuf/proto-block"));
+const Proto = tslib_1.__importStar(require("./ProtoBuf/proto_block"));
 function _decode(object) {
     const tx = Proto.block.ProtoTransaction.deserialize(object);
     const result = tx.toObject();
     return result;
 }
 function decodeProto(object) {
+    console.log('Test decode');
     return _decode(object);
 }
 exports.decodeProto = decodeProto;

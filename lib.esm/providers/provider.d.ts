@@ -4,6 +4,7 @@ import type { Signature } from "../crypto/index.js";
 import type { AccessList, AccessListish, TransactionLike } from "../transaction/index.js";
 import type { ContractRunner } from "./contracts.js";
 import type { Network } from "./network.js";
+import type { UTXOTransactionInput, UTXOTransactionOutput } from "../transaction/utxo.js";
 /**
  *  A **BlockTag** specifies a specific block.
  *
@@ -164,6 +165,8 @@ export interface TransactionRequest {
      *  The access list for berlin and london transactions.
      */
     externalAccessList?: null | AccessListish;
+    inputs?: null | Array<UTXOTransactionInput>;
+    outputs?: null | Array<UTXOTransactionOutput>;
 }
 /**
  *  A **PreparedTransactionRequest** is identical to a [[TransactionRequest]]
@@ -235,16 +238,6 @@ export interface PreparedTransactionRequest {
      *  unsupported errors are silently squelched and ``"latest"`` is used.
      */
     blockTag?: BlockTag;
-    /**
-     *  When using ``call``, this enables CCIP-read, which permits the
-     *  provider to be redirected to web-based content during execution,
-     *  which is then further validated by the contract.
-     *
-     *  There are potential security implications allowing CCIP-read, as
-     *  it could be used to expose the IP address or user activity during
-     *  the fetch to unexpected parties.
-     */
-    enableCcipRead?: boolean;
 }
 /**
  *  Returns a copy of %%req%% with all properties coerced to their strict
@@ -779,6 +772,8 @@ export declare class TransactionResponse implements TransactionLike<string>, Tra
     readonly etxGasTip?: bigint;
     readonly etxData?: string;
     readonly etxAccessList?: AccessList;
+    readonly inputs?: Array<UTXOTransactionInput>;
+    readonly outputs?: Array<UTXOTransactionOutput>;
     /**
      *  @_ignore:
      */

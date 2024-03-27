@@ -64,6 +64,7 @@ class AbstractSigner {
         return pop;
     }
     async populateTransaction(tx) {
+        console.log("populateTransaction");
         const provider = checkProvider(this, "populateTransaction");
         const pop = await populate(this, tx);
         if (pop.nonce == null) {
@@ -121,8 +122,10 @@ class AbstractSigner {
         return await provider.resolveName(name);
     }
     async sendTransaction(tx) {
+        console.log('sendTransaction', tx);
         const provider = checkProvider(this, "sendTransaction");
         const pop = await this.populateTransaction(tx);
+        console.log("populated tx", pop);
         delete pop.from;
         const txObj = index_js_2.Transaction.from(pop);
         const signedTx = await this.signTransaction(txObj);

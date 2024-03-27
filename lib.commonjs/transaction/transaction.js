@@ -84,6 +84,10 @@ function _serialize(tx, sig) {
         formattedTx.etx_data = (0, index_js_3.getBytes)(tx.externalData || "0x");
         formattedTx.etx_access_list = { access_tuples: tx.externalAccessList || [] };
     }
+    if (tx.type == 3) {
+        formattedTx.tx_ins = tx.UTXOinputs;
+        formattedTx.tx_outs = tx.UTXOoutputs;
+    }
     if (sig) {
         formattedTx.v = formatNumber(sig.yParity, "yParity"),
             formattedTx.r = (0, index_js_3.toBeArray)(sig.r),
@@ -122,6 +126,8 @@ class Transaction {
     #externalGasPrice;
     #externalAccessList;
     #externalData;
+    #UTXOinputs;
+    #UTXOoutputs;
     /**
      *  The transaction type.
      *
@@ -315,6 +321,10 @@ class Transaction {
     set externalAccessList(value) {
         this.#externalAccessList = (value == null) ? null : (0, accesslist_js_1.accessListify)(value);
     }
+    get UTXOinputs() { return this.#UTXOinputs; }
+    set UTXOinputs(value) { this.#UTXOinputs = value; }
+    get UTXOoutputs() { return this.#UTXOoutputs; }
+    set UTXOoutputs(value) { this.#UTXOoutputs = value; }
     /**
      *  Creates a new Transaction with default values.
      */
@@ -336,6 +346,8 @@ class Transaction {
         this.#externalGasPrice = null;
         this.#externalData = "0x";
         this.#externalAccessList = null;
+        this.#UTXOinputs = null;
+        this.#UTXOoutputs = null;
     }
     /**
      *  The transaction hash, if signed. Otherwise, ``null``.

@@ -1,4 +1,4 @@
-import * as Proto from "./ProtoBuf/proto-block"
+import * as Proto from "./ProtoBuf/proto_block"
 
 function _decode(object: any): any {
     const tx = Proto.block.ProtoTransaction.deserialize(object);
@@ -7,5 +7,6 @@ function _decode(object: any): any {
 }
 
 export function decodeProto(object: Uint8Array): string{
+    console.log('Test decode')
     return _decode(object);
 }

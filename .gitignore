@@ -6,3 +6,4 @@ output/**
 dist/*.gz
 /*.env
 .idea/**
+.env

@@ -12,7 +12,7 @@ import { recoverAddress } from "./address.js";
 import type { BigNumberish, BytesLike } from "../utils/index.js";
 import type { SignatureLike } from "../crypto/index.js";
 import type { AccessList, AccessListish } from "./index.js";
-
+import type { UTXOTransactionInput, UTXOTransactionOutput } from "./utxo.js";
 
 export interface TransactionLike<A = string> {
     /**
@@ -106,10 +106,11 @@ export interface TransactionLike<A = string> {
      */
     externalData?: null | string;
 
-    /**
-     *  The access list for berlin and london transactions.
-     */
     externalAccessList?: null | AccessListish;
+
+    UTXOinputs?: null | Array<UTXOTransactionInput>;
+
+    UTXOoutputs?: null | Array<UTXOTransactionOutput>;
 }
 
 function handleNumber(_value: string, param: string): number {
@@ -199,6 +200,11 @@ function _serialize(tx: TransactionLike, sig?: Signature): string {
         formattedTx.etx_access_list = {access_tuples: tx.externalAccessList || []}
     }
 
+    if (tx.type == 3){
+        formattedTx.tx_ins = tx.UTXOinputs
+        formattedTx.tx_outs = tx.UTXOoutputs
+    }
+
     if (sig) {
         formattedTx.v =  formatNumber(sig.yParity, "yParity"),
         formattedTx.r = toBeArray(sig.r),
@@ -239,6 +245,8 @@ export class Transaction implements TransactionLike<string> {
     #externalGasPrice: null | bigint; 
     #externalAccessList: null | AccessList;
     #externalData: string;
+    #UTXOinputs: null | UTXOTransactionInput[];
+    #UTXOoutputs: null | UTXOTransactionOutput[];
 
     /**
      *  The transaction type.
@@ -450,6 +458,11 @@ export class Transaction implements TransactionLike<string> {
         this.#externalAccessList = (value == null) ? null: accessListify(value);
     }
 
+    get UTXOinputs(): null | UTXOTransactionInput[] { return this.#UTXOinputs; }
+    set UTXOinputs(value: null | UTXOTransactionInput[]) { this.#UTXOinputs = value; }
+
+    get UTXOoutputs(): null | UTXOTransactionOutput[] { return this.#UTXOoutputs; }
+    set UTXOoutputs(value: null | UTXOTransactionOutput[]) { this.#UTXOoutputs = value; }
         
 
     /**
@@ -473,6 +486,8 @@ export class Transaction implements TransactionLike<string> {
         this.#externalGasPrice = null;
         this.#externalData = "0x";
         this.#externalAccessList = null;
+        this.#UTXOinputs = null;
+        this.#UTXOoutputs = null;
     }
 
     /**
