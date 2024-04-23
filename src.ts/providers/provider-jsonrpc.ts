@@ -874,26 +874,26 @@ export abstract class JsonRpcApiProvider extends AbstractProvider {
             case "getBalance":
                 return {
                     method: "quai_getBalance",
-                    args: [ getLowerCase(req.address), req.blockTag ]
+                    args: [ req.address, req.blockTag ]
                 };
 
             case "getTransactionCount":
                 return {
                     method: "quai_getTransactionCount",
-                    args: [ getLowerCase(req.address), req.blockTag ]
+                    args: [ req.address, req.blockTag ]
                 };
 
             case "getCode":
                 return {
                     method: "quai_getCode",
-                    args: [ getLowerCase(req.address), req.blockTag ]
+                    args: [ req.address, req.blockTag ]
                 };
 
             case "getStorage":
                 return {
                     method: "quai_getStorageAt",
                     args: [
-                        getLowerCase(req.address),
+                        req.address,
                         ("0x" + req.position.toString(16)),
                         req.blockTag
                     ]
@@ -977,7 +977,7 @@ export abstract class JsonRpcApiProvider extends AbstractProvider {
                     if (Array.isArray(req.filter.address)) {
                         req.filter.address = req.filter.address.map(getLowerCase);
                     } else {
-                        req.filter.address = getLowerCase(req.filter.address);
+                        req.filter.address = req.filter.address;
                     }
                 }
                 return { method: "quai_getLogs", args: [ req.filter ] };
