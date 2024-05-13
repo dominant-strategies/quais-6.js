@@ -20,8 +20,7 @@ import type {
 } from "./provider.js";
 import type { Signer } from "./signer.js";
 import { getTxType } from "../utils/index.js";
-import {QiTransaction, QiTransactionLike} from "../transaction/qi-transaction";
-import {QuaiTransaction, QuaiTransactionLike} from "../transaction/quai-transaction";
+import {QiTransaction, QiTransactionLike, QuaiTransaction, QuaiTransactionLike} from "../transaction/index.js";
 
 function checkProvider(signer: AbstractSigner, operation: string): Provider {
     if (signer.provider) { return signer.provider; }

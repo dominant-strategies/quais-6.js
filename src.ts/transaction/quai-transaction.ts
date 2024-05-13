@@ -1,5 +1,5 @@
-import {keccak256, Signature,} from "../crypto";
-import {AccessList, accessListify, AccessListish, AbstractTransaction, TransactionLike, recoverAddress} from "./index";
+import {keccak256, Signature,} from "../crypto/index.js";
+import {AccessList, accessListify, AccessListish, AbstractTransaction, TransactionLike, recoverAddress} from "./index.js";
 import {
     assert,
     assertArgument,
@@ -12,10 +12,10 @@ import {
     getShardForAddress,
     hexlify, isUTXOAddress,
     toBeArray, toBigInt, zeroPadValue
-} from "../utils";
-import {getAddress} from "../address";
-import {formatNumber, handleNumber} from "../providers/format";
-import { ProtoTransaction} from "./abstract-transaction";
+} from "../utils/index.js";
+import {getAddress} from "../address/index.js";
+import {formatNumber, handleNumber} from "../providers/format.js";
+import { ProtoTransaction} from "./abstract-transaction.js";
 
 export interface QuaiTransactionLike extends TransactionLike{
 

@@ -1,5 +1,5 @@
 
-import { N, ShardData } from '../constants';
+import { N, ShardData } from '../constants/index.js';
 import { SigningKey, keccak256 as addressKeccak256 } from "../crypto/index.js";
 import {
     BytesLike,

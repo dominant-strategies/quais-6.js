@@ -1,6 +1,6 @@
-import { ProtoTransaction } from "../transaction/abstract-transaction";
-import { ProtoWorkObject } from "../transaction/work-object";
-import * as Proto from "./ProtoBuf/proto_block"
+import { ProtoTransaction } from "../transaction/abstract-transaction.js";
+import { ProtoWorkObject } from "../transaction/work-object.js";
+import * as Proto from "./ProtoBuf/proto_block.js"
 
 export function decodeProtoTransaction(bytes: Uint8Array): ProtoTransaction {
     const tx = Proto.block.ProtoTransaction.deserialize(bytes);
