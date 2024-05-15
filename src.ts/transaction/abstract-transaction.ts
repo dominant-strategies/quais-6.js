@@ -32,7 +32,7 @@ export interface TransactionLike {
 
 export interface ProtoTransaction {
     type: number
-    to?: Uint8Array
+    to?: Uint8Array | null
     nonce?: number
     value?: Uint8Array
     gas?: number

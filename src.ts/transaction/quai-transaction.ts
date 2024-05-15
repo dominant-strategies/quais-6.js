@@ -328,7 +328,7 @@ get originShard(): string | undefined {
             gas_tip_cap: formatNumber(this.maxPriorityFeePerGas || 0, "maxPriorityFeePerGas"),
             gas_fee_cap: formatNumber(this.maxFeePerGas || 0, "maxFeePerGas"),
             gas: Number(this.gasLimit || 0),
-            to: this.to != null ? getBytes(this.to as string) : new Uint8Array(0),
+            to: this.to != null ? getBytes(this.to as string) : null,
             value: formatNumber(this.value || 0, "value"),
             data: getBytes(this.data || "0x"),
             access_list: { access_tuples: [] },
@@ -339,6 +339,7 @@ get originShard(): string | undefined {
             protoTx.r = toBeArray(this.signature.r)
             protoTx.s = toBeArray(this.signature.s)
         }
+
         return protoTx;
     }
 

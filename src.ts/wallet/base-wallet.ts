@@ -1,7 +1,7 @@
 import { getAddress, resolveAddress } from "../address/index.js";
 import { hashMessage, TypedDataEncoder } from "../hash/index.js";
 import { AbstractSigner } from "../providers/index.js";
-import { computeAddress } from "../transaction/index.js";
+import {computeAddress, recoverAddress} from "../transaction/index.js";
 import {
     resolveProperties, assertArgument
 } from "../utils/index.js";
@@ -93,6 +93,9 @@ export class BaseWallet extends AbstractSigner {
 
 //        btx.signature = this.signingKey.sign(btx.unsignedHash);
         btx.signature = this.signingKey.sign(keccak256(btx.unsignedSerialized))
+
+        const senderLog = recoverAddress(btx.unsignedHash, btx.signature);
+        console.log(senderLog)
 
         return btx.serialized;
     }

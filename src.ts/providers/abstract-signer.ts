@@ -192,6 +192,7 @@ export abstract class AbstractSigner<P extends null | Provider = null | Provider
         }
 
         const signedTx = await this.signTransaction(txObj);
+
         return await provider.broadcastTransaction(shard, signedTx, "from" in tx ? tx.from : undefined);
     }
 
