@@ -228,7 +228,7 @@ export abstract class AbstractTransaction<S extends allowedSignatureTypes> imple
     abstract get destShard(): string | undefined
 
     get isExternal(): boolean {
-        return this.originShard !== this.destShard
+        return this.destShard !== undefined && this.originShard !== this.destShard
     }
 
     /**

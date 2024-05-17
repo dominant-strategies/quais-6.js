@@ -3,7 +3,7 @@ import { hashMessage, TypedDataEncoder } from "../hash/index.js";
 import { AbstractSigner } from "../providers/index.js";
 import {computeAddress, recoverAddress} from "../transaction/index.js";
 import {
-    resolveProperties, assertArgument
+    resolveProperties, assertArgument, getBytes
 } from "../utils/index.js";
 
 import type { SigningKey } from "../crypto/index.js";
@@ -91,11 +91,19 @@ export class BaseWallet extends AbstractSigner {
 
         const btx = QuaiTransaction.from(<QuaiTransactionLike>tx);
 
+        console.log("unsignedSerialized", getBytes(btx.unsignedSerialized))
+        const digest= keccak256(btx.unsignedSerialized)
 //        btx.signature = this.signingKey.sign(btx.unsignedHash);
-        btx.signature = this.signingKey.sign(keccak256(btx.unsignedSerialized))
+        btx.signature = this.signingKey.sign(digest)
 
-        const senderLog = recoverAddress(btx.unsignedHash, btx.signature);
-        console.log(senderLog)
+        const senderLog = recoverAddress(digest, btx.signature);
+        const digestBytes = Uint8Array.from(Buffer.from(digest.slice(2), 'hex'));
+        console.log("digestBytes", digestBytes)
+        console.log("senderLog", senderLog)
+        console.log("R", btx.signature.r)
+        console.log("S", btx.signature.s)
+        console.log("V", btx.signature.v)
+        console.log("serialized", btx.serialized)
 
         return btx.serialized;
     }
